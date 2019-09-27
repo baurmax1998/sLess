@@ -1,0 +1,18 @@
+{
+  "name": "sless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "m4x",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^6.0.10",
+    "jquery": "^3.4.1",
+    "jsdoc3-parser": "^2.0.0",
+    "squirrelly": "^7.6.0"
+  }
+}
