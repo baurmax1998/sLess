@@ -162,8 +162,19 @@ body{
   margin: 0;
 }
 
+#idContentEditable{
+  counter-reset: section; 
+}
+
+#idContentEditable > div::before {
+  padding-left: 5px;
+  /* padding-right: 3px; */
+  counter-increment: section; 
+  content: counter(section) " ";
+}
+
 #idContentEditable > div{
-  padding-left: 10px;
+  font-size: 15px;
   padding-bottom: 1px;
 }
 
