@@ -7,8 +7,8 @@ var uuid = 0;
 var searchFieldValue;
 
 
-function initDemo() {
-  initGrid();
+function initDemo(scripts) {
+  initGrid(scripts);
   // Reset field values.
   searchField.value = '';
   filterField.value = filterField.querySelectorAll('option')[0].value;
@@ -34,11 +34,19 @@ function initDemo() {
 
 }
 
-async function initGrid() {
+async function initGrid(scripts) {
   var dragCounter = 0;
-  let scripts = await loadScripts()
+
+  var ret = [];
+  for (let i = 0; i < scripts.length; i++) {
+    ret.push(generateElement(
+      ++uuid,
+      scripts[i]
+    ));
+  }
+  
   grid = new Muuri(gridElement, {
-    items: scripts,
+    items: ret,
     layoutDuration: 400,
     layoutEasing: 'ease',
     dragEnabled: false, //todo buttons funktionieren nicht
@@ -110,33 +118,6 @@ function removeItem(e) {
   });
   updateIndices();
 }
-
-async function loadScripts() {
-  let scriptPath = "./data/scripts/"
-  let paths = await readPaths(scriptPath)
-  var ret = [];
-  for (let i = 0; i < paths.length; i++) {
-    const path = paths[i];
-    let doc = await parseDoc(scriptPath + path);
-    if (doc == null || doc.undocumented) {
-      console.log(path + ": continued!")
-      continue;
-    }
-    var meta = {
-      name: doc.name,
-      description: doc.description,
-      params: doc.params,
-      returns: doc.returns,
-      path: doc.meta.path + "/" + doc.meta.filename,
-    };
-    ret.push(generateElement(
-      ++uuid,
-      meta
-    ));
-  }
-  return ret;
-}
-
 
 
 function generateElement(id, meta) {
