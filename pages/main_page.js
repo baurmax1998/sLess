@@ -140,9 +140,9 @@ function generateElement(id, meta) {
             .addClass(color)
             .text(name)
             .on("click", function () {
-              console.log(path)
+              console.log(name)
               $("#main").hide();
-              $("#code_editor").show();
+              initEditor(name)
             })
         ))
         .append(params)
@@ -209,4 +209,48 @@ function addFunction(id, color, icon) {
         .append($('<i class="fa w3-small">').addClass(icon))
     )
   );
+}
+
+
+function getScriptColor(meta) {
+  var filterOptions = ['red', 'blue', 'green', 'orange'];
+  const scriptTypes = {
+    Function: "green",
+    Consumer: "blue",
+    Supplier: "orange",
+    Runnable: "red"
+  }
+  if (meta.returns == []) {
+    if (meta.params == []) {
+      return scriptTypes.Runnable;
+    } else {
+      return scriptTypes.Consumer;
+    }
+  } else {
+    if (meta.params == []) {
+      return scriptTypes.Supplier;
+    } else {
+      return scriptTypes.Function;
+    }
+  }
+}
+
+function getScriptParams(params) {
+  var paramsElement = $("<p>");
+  for (let i = 0; i < params.length; i++) {
+    const param = params[i];
+    paramsElement.append(
+      $("<span class='param'>").attr("title", param.description)
+        .append($("<span>").text(param.name))
+        .append($("<a href='#' class='w3-tag w3-round w3-green'>").text(param.type.names[0]))
+    )
+  }
+  return paramsElement;
+}
+
+function getScriptReturn(returns) {
+  return $("<p>")
+    .append(
+      $("<a href='#' class='w3-tag w3-round'>")
+        .text(returns[0].type.names[0]))
 }

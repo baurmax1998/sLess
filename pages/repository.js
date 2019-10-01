@@ -1,0 +1,154 @@
+let db = null;
+var tables = {
+  typ: "typ",
+  synonym: "synonym",
+  synonym_typ: "synonym_typ",
+  field: "field",
+  fun: "fun"
+}
+
+function add(tableName, object) {
+  db.get(tableName)
+    .push(object)
+    .write()
+}
+
+function getAll(tableName) {
+  return db.get(tableName).value();
+}
+
+function getId(tableName) {
+  return db.get(tableName).size().value()
+}
+
+function typ(id) {
+  return { id: id }
+}
+
+function synonym(typ, name, id) {
+  return {
+    typ: typ,
+    name: name,
+    id: id
+  }
+}
+
+function synonym_typ(typ, kann_als_typ) {
+  return {
+    typ: typ,
+    kann_als_typ: kann_als_typ
+  }
+}
+
+function field(from_typ, synonym, typ, beschreibung) {
+  return {
+    from_typ: from_typ,
+    synonym: synonym,
+    typ: typ,
+    beschreibung: beschreibung
+  }
+}
+
+function fun(param, returns, name, beschreibung, path) {
+  return {
+    param: param,
+    returns: returns,
+    name: name,
+    beschreibung: beschreibung,
+    path: path
+  }
+}
+
+function findSynonymTypForFields(fields) {
+  let typesFromFields = Stream(fields)
+    .map("typ")
+    .toArray();
+  let types = Stream(getAll(tables.field))
+    .groupBy('from_typ');
+  let synonym_typs = [];
+  for (const typ in types) {
+    const fields = types[typ];
+    let wrongField = false;
+    for (let i = 0; i < fields.length; i++) {
+      const field = fields[i];
+      wrongField = !typesFromFields.includes(field.typ) || wrongField;
+    }
+    if (!wrongField) {
+      synonym_typs.push(fieds)
+    }
+  }
+  return synonym_typs;
+}
+
+function findFieldsForTyp(type_id) {
+  return db.get(tables.field)
+    .filter({ from_typ: type_id })
+    .value();
+}
+
+function findTypForSynonym(synonym){
+  return db.get(tables.synonym)
+    .filter({name: synonym})
+    .value();
+}
+
+function findSynonymTypForTyp(typ_id) {
+  let findFieldsForTyp = findFieldsForTyp(typ_id)
+  return findSynonymTypForFields(findFieldsForTyp);
+
+}
+
+function findMethodsForType(type_id) {
+  let synonym_typs = findSynonymTypForTyp(type_id)
+  let allFunktions = getAll(tables.fun);
+  return Stream(allFunktions).filter(function (fun) {
+    return synonym_typs.includes(fun.param);
+  })
+}
+
+function findConstructorForType(type_id) {
+  let synonym_typs = findSynonymTypForTyp(type_id)
+  let allFunktions = getAll(tables.fun);
+  return Stream(allFunktions).filter(function (fun) {
+    return synonym_typs.includes(fun.returns);
+  })
+}
+
+
+function databaseReadyAndFilledWithDefaults() {
+  fs.unlinkSync("./db.json");
+  const adapter = new FileSync('db.json')
+  db = low(adapter)
+  db.defaults({
+    typ: [],
+    synonym: [],
+    synonym_typ: [],
+    field: [],
+    fun: [],
+    count: 0
+  }).write();
+  addTypeWithName("number")
+  addTypeWithName("string")
+}
+
+function addOrGetSynonym(typ, name) {
+  let currentSynonym = db.get(tables.synonym)
+    .filter({
+      typ: typ,
+      name: name
+    }).value();
+  let id = getId(tables.synonym);
+  if (currentSynonym.length == 0) {
+    add(tables.synonym, synonym(typ, name, id))
+  } else {
+    id = currentSynonym[0].id;
+  }
+  return id;
+}
+
+function addTypeWithName(name) {
+  var id = getId(tables.typ);
+  add(tables.typ, typ(id))
+  add(tables.synonym, synonym(id, name, getId(tables.synonym)))
+  return id;
+}
