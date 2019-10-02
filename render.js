@@ -41,13 +41,13 @@ async function loadScripts() {
 
 
 $(document).ready(async function () {
-  // $("#main").hide();
+  $("#main").hide();
   $("#code_editor").hide();
   $("#query_editor").hide();
   $("#type_editor").hide();
 
-  databaseReadyAndFilledWithDefaults();
-  let scripts = await loadScripts()
+  // databaseReadyAndFilledWithDefaults();
+  // let scripts = await loadScripts()
   $("#code_editor").hide();
   addFunction("userf", "red", "fa-user");
   addFunction("searchf", "green", "fa-search");
@@ -62,8 +62,8 @@ $(document).ready(async function () {
   });
   
 
-  initDemo(scripts);
-  // initEditor(square);
+  // initDemo(scripts);
+  initEditor("square");
   // initQueryBuilder();
 })
 
