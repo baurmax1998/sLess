@@ -3,25 +3,11 @@ function initEditor(funName) {
   console.log(funName)
   $("#code_editor").show();
 
-  var autocomplete = initAutocomplete(funName);
-
   var tributeNoMatch = new Tribute({
     allowSpaces: true,
     autocompleteMode: true,
-    values: autocomplete,
-    selectTemplate: function (item) {
-      if (typeof item === 'undefined') return null;
-      setTimeout(function () {
-        var node = activeRow()[0];
-        var range = document.createRange();
-        range.setStart(node, 3);
-        range.setEnd(node, 4);
-        var sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }, 100);
-      return "var <span>name</span> = 'max'";
-    },
+    values: values,
+    selectTemplate: selectTemplate,
     menuItemTemplate: function (item) {
       return "<span class='left'>" + item.string + "</span>"
         + "<span class='right'>" + item.original.info + "</span>";
@@ -30,53 +16,76 @@ function initEditor(funName) {
     fillAttr: 'name'
   })
 
-
   $("#idContentEditable > div").each((i, item) => {
-    // tributeAutocompleteTest.attach(item);
-    // tributeMultipleTriggers.attach(item);
     tributeNoMatch.attach(item);
   })
-}
-
-function initAutocomplete(params) {
-  return function (text, cb) {
-    var textWithoutFunc = text.split(".")[0]
-    var posibilitys = [];
-    posibilitys = addVars(posibilitys, textWithoutFunc);
-    cb(posibilitys)
-  }
-
-  function addVars(posibilitys, textWithoutFunc) {
-    if(!activeRow().text().includes("var")){
-      posibilitys = posibilitys.concat([{
-        name: "true.var",
-        info: "bool",
-        action: "var"
-      }, {
-        name: "false.var",
-        info: "bool",
-        action: "var"
-      }, {
-        name: textWithoutFunc + ".var",
-        info: "string",
-        action: "var"
-      }]);
-      if (!isNaN(textWithoutFunc)) {
-        posibilitys.push({
-          name: textWithoutFunc + ".var",
-          info: "number",
-          action: "var"
-        })
-      }
-    } 
-    return posibilitys;
-  }
 }
 
 function activeRow() {
   return $("#idContentEditable > div:focus");
 }
 
+
+function selectTemplate(item) {
+  let active = activeRow();
+  if (typeof item === 'undefined') return null;
+  if (item.original.action) {
+    var textWithoutFunc = item.original.name.split(".")[0]
+    let start = 3;
+    let end = 4;
+    if (item.original.info == "string") {
+      textWithoutFunc = active.text().split(".")[0]
+      textWithoutFunc = '"' + textWithoutFunc + '"'
+      active.text("")
+      start = 1;
+      end = 2;
+    }
+    setTimeout(function () {
+      var node = activeRow()[0];
+      var range = document.createRange();
+      range.setStart(node, start);
+      range.setEnd(node, end);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }, 100);
+    return "var <span class='varName'>name</span> = " + textWithoutFunc;
+  }
+  return "todo"
+}
+
+function values(text, cb) {
+  var textWithoutFunc = text.split(".")[0]
+  var posibilitys = [];
+  posibilitys = addVars(posibilitys, textWithoutFunc);
+  cb(posibilitys)
+}
+
+function addVars(posibilitys, textWithoutFunc) {
+  if (!activeRow().text().includes("var")) {
+    posibilitys = posibilitys.concat([{
+      name: "true.var",
+      info: "bool",
+      action: "var"
+    }, {
+      name: "false.var",
+      info: "bool",
+      action: "var"
+    }, {
+      name: textWithoutFunc + ".var",
+      info: "string",
+      action: "var"
+    }]);
+    if (!isNaN(textWithoutFunc)) {
+      posibilitys.push({
+        name: textWithoutFunc + ".var",
+        info: "number",
+        action: "var"
+      })
+    }
+  }
+  return posibilitys;
+}
 
 function tempInit() {
   $("#idContentEditable > div").keydown(function editorKeydown(e) {
