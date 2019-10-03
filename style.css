@@ -189,3 +189,32 @@ body{
   padding-bottom: 0px;
   border-bottom: 1px solid gray;
 }
+
+.tribute-container ul {
+  list-style: initial;
+}
+
+
+.tribute-container > ul >li{
+  padding: 3;
+  font-size: smaller;
+
+}
+
+.left{
+  float: left;
+  font-weight: normal !important;
+  padding-right: 12px;
+}
+
+.left > span{
+  font-weight: bold;
+}
+
+.right{
+  float: right;
+  font-weight: normal !important;
+}
+
+
+
