@@ -7,8 +7,9 @@ var uuid = 0;
 var searchFieldValue;
 
 
-function initDemo(scripts) {
-  initGrid(scripts);
+function initScriptView() {
+  $("#main").show();
+  initGrid();
   // Reset field values.
   searchField.value = '';
   filterField.value = filterField.querySelectorAll('option')[0].value;
@@ -34,9 +35,9 @@ function initDemo(scripts) {
 
 }
 
-async function initGrid(scripts) {
+async function initGrid() {
   var dragCounter = 0;
-
+  let scripts = getAllFuns();
   var ret = [];
   for (let i = 0; i < scripts.length; i++) {
     ret.push(generateElement(
@@ -123,8 +124,8 @@ function removeItem(e) {
 function generateElement(id, meta) {
   let path = meta.path;
   var color = getScriptColor(meta);
-  var params = getScriptParams(meta.params);
-  var returns = getScriptReturn(meta.returns)
+  var params = getScriptParams(findFieldsForTyp(meta.param));
+  var returns = getScriptReturn(findSynonymForTyp(meta.returns)[0])
   var name = meta.name;
   var classNames = 'item h2 w2 ' + color;
   var card = $("<div>")
@@ -239,10 +240,12 @@ function getScriptParams(params) {
   var paramsElement = $("<p>");
   for (let i = 0; i < params.length; i++) {
     const param = params[i];
+    let paramName = findSynonymById(param.synonym)[0];
+    let paramTyp = findSynonymForTyp( param.typ)[0]
     paramsElement.append(
-      $("<span class='param'>").attr("title", param.description)
-        .append($("<span>").text(param.name))
-        .append($("<a href='#' class='w3-tag w3-round w3-green'>").text(param.type.names[0]))
+      $("<span class='param'>").attr("title", param.beschreibung)
+        .append($("<span>").text(paramName.name))
+        .append($("<a href='#' class='w3-tag w3-round w3-green'>").text(paramTyp.name))
     )
   }
   return paramsElement;
@@ -252,5 +255,5 @@ function getScriptReturn(returns) {
   return $("<p>")
     .append(
       $("<a href='#' class='w3-tag w3-round'>")
-        .text(returns[0].type.names[0]))
+        .text(returns.name))
 }

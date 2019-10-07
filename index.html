@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="style.css">
   <script>window.$ = window.jQuery = require("jquery");</script>
   <script src="https://unpkg.com/esprima@~4.0/dist/esprima.js"></script>
+  <script src="./lib/json/editor.min.js"></script>
   <script src="./lib/jquery.caret.js"></script>
   <script src="./lib/querybuilder/query-builder.standalone.js"></script>
   <script src="./lib/tribute/tribute.js"></script>
@@ -29,7 +30,7 @@
         <div class="control-icon">
           <i class="material-icons">&#xE8B6;</i>
         </div>
-        <input class="control-field search-field form-control " type="text" name="search" placeholder="Search..." />
+        <input class="control-field search-field form-control-main " type="text" name="search" placeholder="Search..." />
       </div>
       <div class="control filter">
         <div class="control-icon">
@@ -38,7 +39,7 @@
         <div class="select-arrow">
           <i class="material-icons">&#xE313;</i>
         </div>
-        <select class="control-field filter-field form-control">
+        <select class="control-field filter-field form-control-main">
           <option value="" selected>All</option>
           <option value="orange">Supplier</option>
           <option value="red">Runnable</option>
@@ -53,10 +54,11 @@
     </div>
   </div>
   <div id="code_editor">
-    <h1>Code Editor</h1>
+    <h1 id="code_header">Code Editor</h1>
     <div id="idContentEditable">
+      <div contenteditable="true"></div>
+      <div contenteditable="true"></div>
       <div contenteditable="true">123</div>
-      <div contenteditable="true">hallo das </div>
       <div contenteditable="true">hallo das </div>
     </div>
   </div>
@@ -65,6 +67,13 @@
     <div id="builder-basic">
 
     </div>
+  </div>
+  <div id="object_builder">
+    <h1>Object-Builder</h1>
+    <div id="json_editor">
+
+    </div>
+
   </div>
   <div id="type_editor">
     <h1>Type Builder</h1>
@@ -114,6 +123,7 @@
   <script src="./pages/main_page.js"></script>
   <script src="./pages/editor_page.js"></script>
   <script src="./pages/query_page.js"></script>
+  <script src="./pages/object_builder.js"></script>
   <script src="render.js"></script>
 </body>
 

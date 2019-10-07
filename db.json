@@ -5,6 +5,15 @@
     },
     {
       "id": 1
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
     }
   ],
   "synonym": [
@@ -17,10 +26,92 @@
       "typ": 1,
       "name": "string",
       "id": 1
+    },
+    {
+      "typ": 2,
+      "name": "bobable",
+      "id": 2
+    },
+    {
+      "typ": 3,
+      "name": "randomIntable",
+      "id": 3
+    },
+    {
+      "typ": 0,
+      "name": "min",
+      "id": 4
+    },
+    {
+      "typ": 0,
+      "name": "max",
+      "id": 5
+    },
+    {
+      "typ": 4,
+      "name": "squareable",
+      "id": 6
+    },
+    {
+      "typ": 0,
+      "name": "a",
+      "id": 7
+    },
+    {
+      "typ": 0,
+      "name": "b",
+      "id": 8
     }
   ],
   "synonym_typ": [],
-  "field": [],
-  "fun": [],
+  "field": [
+    {
+      "from_typ": 3,
+      "synonym": 4,
+      "typ": 0,
+      "beschreibung": "the lowest"
+    },
+    {
+      "from_typ": 3,
+      "synonym": 5,
+      "typ": 0,
+      "beschreibung": "the most"
+    },
+    {
+      "from_typ": 4,
+      "synonym": 7,
+      "typ": 0,
+      "beschreibung": "one side"
+    },
+    {
+      "from_typ": 4,
+      "synonym": 8,
+      "typ": 0,
+      "beschreibung": "other side"
+    }
+  ],
+  "fun": [
+    {
+      "param": 2,
+      "returns": 1,
+      "name": "bob",
+      "beschreibung": "just gives bob",
+      "path": "bob.js"
+    },
+    {
+      "param": 3,
+      "returns": 0,
+      "name": "randomInt",
+      "beschreibung": "Give some number",
+      "path": "randomInt.js"
+    },
+    {
+      "param": 4,
+      "returns": 0,
+      "name": "square",
+      "beschreibung": "calc the surface of a square",
+      "path": "square.js"
+    }
+  ],
   "count": 0
 }

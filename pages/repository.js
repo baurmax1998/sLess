@@ -1,4 +1,16 @@
-let db = null;
+
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+let db = low(new FileSync('db.json'))
+db.defaults({
+  typ: [],
+  synonym: [],
+  synonym_typ: [],
+  field: [],
+  fun: [],
+  count: 0
+}).write();
+
 var tables = {
   typ: "typ",
   synonym: "synonym",
@@ -11,6 +23,14 @@ function add(tableName, object) {
   db.get(tableName)
     .push(object)
     .write()
+}
+
+function getAllSynonyms() {
+  return getAll(tables.synonym);
+}
+
+function getAllFuns() {
+  return getAll(tables.fun);
 }
 
 function getAll(tableName) {
@@ -59,6 +79,7 @@ function fun(param, returns, name, beschreibung, path) {
   }
 }
 
+
 function findSynonymTypForFields(fields) {
   let typesFromFields = Stream(fields)
     .map("typ")
@@ -78,6 +99,24 @@ function findSynonymTypForFields(fields) {
     }
   }
   return synonym_typs;
+}
+
+function findFunByName(name) {
+  return db.get(tables.fun)
+    .filter({ name: name })
+    .value();
+}
+
+function findSynonymForTyp(type_id) {
+  return db.get(tables.synonym)
+    .filter({ typ: type_id })
+    .value();
+}
+
+function findSynonymById(id) {
+  return db.get(tables.synonym)
+    .filter({ id: id })
+    .value();
 }
 
 function findFieldsForTyp(type_id) {
@@ -116,9 +155,9 @@ function findConstructorForType(type_id) {
 
 
 function databaseReadyAndFilledWithDefaults() {
+  db = null;
   fs.unlinkSync("./db.json");
-  const adapter = new FileSync('db.json')
-  db = low(adapter)
+  db = low(new FileSync('db.json'))
   db.defaults({
     typ: [],
     synonym: [],
@@ -151,4 +190,36 @@ function addTypeWithName(name) {
   add(tables.typ, typ(id))
   add(tables.synonym, synonym(id, name, getId(tables.synonym)))
   return id;
+}
+
+async function loadScripts() {
+  databaseReadyAndFilledWithDefaults();
+  let scriptPath = "./data/scripts/"
+  let paths = await readPaths(scriptPath)
+  for (let i = 0; i < paths.length; i++) {
+    const path = paths[i];
+    let doc = await parseDoc(scriptPath + path);
+    if (doc == null || doc.undocumented) {
+      todos.push("Das Script: " + path + " konnte nicht mit JSDoc gelesen werden!!")
+      continue;
+    }
+    var meta = {
+      name: doc.name,
+      description: doc.description,
+      params: doc.params,
+      returns: doc.returns,
+      path: doc.meta.path + "/" + doc.meta.filename,
+    };
+    let paramsTyp = addTypeWithName(meta.name + "able");
+    for (let i = 0; i < meta.params.length; i++) {
+      const param = meta.params[i];
+      let typOfParam = findTypForSynonym( param.type.names[0])[0].typ;
+      let synonym = addOrGetSynonym(typOfParam, param.name);
+      add(tables.field, field(paramsTyp, synonym, typOfParam, param.description))
+    }
+    let typOfReturn = findTypForSynonym(meta.returns[0].type.names[0])[0].typ;
+
+    add(tables.fun, fun(paramsTyp, typOfReturn, meta.name, meta.description, path))
+  }
+  console.log("scripts loaded")
 }
