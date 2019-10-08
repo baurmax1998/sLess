@@ -1,6 +1,6 @@
 
 function initQueryBuilder() {
-  $("#code_editor").hide();
+  $("#query_editor").show();
   var rules_basic = {
     condition: 'AND',
     rules: [{

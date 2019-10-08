@@ -1,15 +1,18 @@
 function initObjectBuilder(typeSyn, scope) {
   $("#object_builder").show();
-
   let typ = findTypForSynonym(typeSyn)[0];
-
   let fields = findFieldsForTyp(typ.typ)
-
   let properties = {};
-
   const primitives = {
     "0": "integer",
     "1": "string"
+  }
+
+  if(fields.length == 0){
+    fields.push({
+      synonym: typ.id,
+      typ: typ.typ
+    })
   }
 
   for (let i = 0; i < fields.length; i++) {

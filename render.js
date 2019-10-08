@@ -9,6 +9,7 @@ $(document).ready(async function () {
   $("#query_editor").hide();
   $("#type_editor").hide();
   $("#object_builder").hide();
+  $("#fun_builder").hide();
 
   $("#code_editor").hide();
   addFunction("searchf", "orange", "fa-search");
@@ -36,7 +37,10 @@ $(document).ready(async function () {
   // initScriptView();
   // initEditor("square");
   // initQueryBuilder();
-  initObjectBuilder("squareable", {});
+  // initObjectBuilder("number", {});
+
+  initFunBuilder()
+
 })
 
 function handleError(err) {
