@@ -1,4 +1,47 @@
+var Sqrl = require("squirrelly");
+var newFun = {
+  "name": "pow",
+  "description": "The pow() function returns the base to the exponent power.",
+  "params": [
+    {
+      "name": "base",
+      "description": "lhjglj",
+      "array": false,
+      "typ": "number"
+    },
+    {
+      "name": "exponent",
+      "description": "bbjbhj",
+      "array": false,
+      "typ": "number"
+    }
+  ],
+  "returns": "number",
+  "array": false
+}
+var myTemplate = `
+/**
+  * {{description}}
 
+  {{each(options.params)}}
+* @param {{{@this.typ}}{{if(@this.array)}}[]{{/if}}} {{@this.name}} {{@this.description}}
+
+  {{/each}}
+* @returns {{{returns}}{{if(options.array)}}[]{{/if}}}
+  */ 
+function {{name}}({{each(options.params)}}
+{{@this.name}}
+{{if(@index + 1 < options.params.length)}}, {{/if}}
+{{/each}}
+) {
+  
+}
+`
+
+
+
+var result = Sqrl.Render(myTemplate, newFun)
+console.log(result)
 
 function initFunBuilder() {
   $("#fun_builder").show();
@@ -24,12 +67,12 @@ function initFunBuilder() {
           }
         },
         returns: {
-          type: "array",
-          format: "tabs",
-          items: {
-            title: "Field",
-            $ref: "#/definitions/field"
-          }
+          $ref: "#/definitions/typ"
+        },
+        array: {
+          type: "boolean",
+          title: "returns array",
+          default: false
         }
       },
       definitions: {
@@ -37,10 +80,10 @@ function initFunBuilder() {
           id: "typ",
           type: "string",
           enum: [
-            "String",
-            "Number",
-            "Bool",
-            "Object",
+            "string",
+            "number",
+            "bool",
+            "object",
             "ToDo:ParamType"
           ],
           default: "String"
@@ -67,12 +110,12 @@ function initFunBuilder() {
             },
             typ: {
               $ref: "#/definitions/typ",
-              title: "Typ"
+              title: "typ"
             }
           }
-
         }
       }
     }
   });
+  editor.setValue(newFun)
 }
