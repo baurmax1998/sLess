@@ -145,6 +145,10 @@ function addStandarts(posibilitys) {
     name: ".var",
     info: "any",
     action: "var"
+  },{
+    name: "return",
+    info: "ret",
+    action: "ret"
   }]);
 
   return posibilitys;

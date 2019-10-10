@@ -125,9 +125,9 @@ function findFieldsForTyp(type_id) {
     .value();
 }
 
-function findTypForSynonym(synonym){
+function findTypForSynonym(synonym) {
   return db.get(tables.synonym)
-    .filter({name: synonym})
+    .filter({ name: synonym })
     .value();
 }
 
@@ -192,34 +192,44 @@ function addTypeWithName(name) {
   return id;
 }
 
+async function addScript(name, code) {
+  var fileName = name + ".js";
+  var fin = await writeFile("./data/scripts/" + fileName, code)
+  loadScript(fileName);
+}
+
 async function loadScripts() {
   databaseReadyAndFilledWithDefaults();
   let scriptPath = "./data/scripts/"
   let paths = await readPaths(scriptPath)
   for (let i = 0; i < paths.length; i++) {
     const path = paths[i];
-    let doc = await parseDoc(scriptPath + path);
-    if (doc == null || doc.undocumented) {
-      todos.push("Das Script: " + path + " konnte nicht mit JSDoc gelesen werden!!")
-      continue;
-    }
-    var meta = {
-      name: doc.name,
-      description: doc.description,
-      params: doc.params,
-      returns: doc.returns,
-      path: doc.meta.path + "/" + doc.meta.filename,
-    };
-    let paramsTyp = addTypeWithName(meta.name + "able");
-    for (let i = 0; i < meta.params.length; i++) {
-      const param = meta.params[i];
-      let typOfParam = findTypForSynonym( param.type.names[0])[0].typ;
-      let synonym = addOrGetSynonym(typOfParam, param.name);
-      add(tables.field, field(paramsTyp, synonym, typOfParam, param.description))
-    }
-    let typOfReturn = findTypForSynonym(meta.returns[0].type.names[0])[0].typ;
-
-    add(tables.fun, fun(paramsTyp, typOfReturn, meta.name, meta.description, path))
+    loadScript(path)
   }
   console.log("scripts loaded")
+}
+
+async function loadScript(fileName) {
+  let doc = await parseDoc("./data/scripts/" + fileName);
+  if (doc == null || doc.undocumented) {
+    todos.push("Das Script: " + fileName + " konnte nicht mit JSDoc gelesen werden!!")
+    return;
+  }
+  var meta = {
+    name: doc.name,
+    description: doc.description,
+    params: doc.params,
+    returns: doc.returns,
+    path: doc.meta.path + "/" + doc.meta.filename,
+  };
+  let paramsTyp = addTypeWithName(meta.name + "able");
+  for (let i = 0; i < meta.params.length; i++) {
+    const param = meta.params[i];
+    let typOfParam = findTypForSynonym(param.type.names[0])[0].typ;
+    let synonym = addOrGetSynonym(typOfParam, param.name);
+    add(tables.field, field(paramsTyp, synonym, typOfParam, param.description))
+  }
+  let typOfReturn = findTypForSynonym(meta.returns[0].type.names[0])[0].typ;
+
+  add(tables.fun, fun(paramsTyp, typOfReturn, meta.name, meta.description, fileName))
 }

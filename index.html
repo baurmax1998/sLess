@@ -4,7 +4,7 @@
 <head>
   <title>sLess</title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-  <link rel="stylesheet" href="lib/fontawesome5/css/all.css"  />
+  <link rel="stylesheet" href="lib/fontawesome5/css/all.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="./lib/querybuilder/query-builder.default.css">
@@ -30,7 +30,8 @@
         <div class="control-icon">
           <i class="material-icons">&#xE8B6;</i>
         </div>
-        <input class="control-field search-field form-control-main " type="text" name="search" placeholder="Search..." />
+        <input class="control-field search-field form-control-main " type="text" name="search"
+          placeholder="Search..." />
       </div>
       <div class="control filter">
         <div class="control-icon">
@@ -58,8 +59,11 @@
     <div id="idContentEditable">
       <div contenteditable="true"></div>
       <div contenteditable="true"></div>
-      <div contenteditable="true">123</div>
-      <div contenteditable="true">hallo das </div>
+      <div contenteditable="true"></div>
+      <div contenteditable="true"></div>
+      <div contenteditable="true"></div>
+      <div contenteditable="true"></div>
+
     </div>
   </div>
   <div id="query_editor">
@@ -75,12 +79,49 @@
     </div>
 
   </div>
-  <div id="fun_builder">
-    <h1>Fun-Builder</h1>
-    <div id="fun_editor">
-
+  <div id="fun_builder" class="w3-modal">
+    <div class="w3-modal-content w3-card-4">
+      <h2>Fun-Builder</h2>
+      <div id="fun_editor"></div>
+      <button id="createFun" class="w3-button w3-green">create</button>
     </div>
   </div>
+
+  <div class="calculator">
+    <div class="input" id="input"></div>
+    <div class="buttons">
+      <div class="operators">
+        <div>+</div>
+        <div>-</div>
+        <div>&times;</div>
+        <div>&divide;</div>
+      </div>
+      <div class="leftPanel">
+        <div class="numbers">
+          <div>7</div>
+          <div>8</div>
+          <div>9</div>
+        </div>
+        <div class="numbers">
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+        </div>
+        <div class="numbers">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+        </div>
+        <div class="numbers">
+          <div>0</div>
+          <div>.</div>
+          <div id="clear">C</div>
+        </div>
+      </div>
+      <div class="equal" id="result">=</div>
+    </div>
+  </div>
+
   <div id="type_editor">
     <h1>Type Builder</h1>
     <table class="w3-table-all">
@@ -131,6 +172,7 @@
   <script src="./pages/query_page.js"></script>
   <script src="./pages/object_builder.js"></script>
   <script src="./pages/fun_builder.js"></script>
+  <script src="./pages/calc.js"></script>
   <script src="render.js"></script>
 </body>
 

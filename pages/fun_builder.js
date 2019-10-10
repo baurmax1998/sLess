@@ -1,24 +1,6 @@
 var Sqrl = require("squirrelly");
-var newFun = {
-  "name": "pow",
-  "description": "The pow() function returns the base to the exponent power.",
-  "params": [
-    {
-      "name": "base",
-      "description": "lhjglj",
-      "array": false,
-      "typ": "number"
-    },
-    {
-      "name": "exponent",
-      "description": "bbjbhj",
-      "array": false,
-      "typ": "number"
-    }
-  ],
-  "returns": "number",
-  "array": false
-}
+var editor;
+
 var myTemplate = `
 /**
   * {{description}}
@@ -38,15 +20,42 @@ function {{name}}({{each(options.params)}}
 }
 `
 
-
-
-var result = Sqrl.Render(myTemplate, newFun)
-console.log(result)
-
 function initFunBuilder() {
   $("#fun_builder").show();
+  var modal = document.getElementById('fun_builder');
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+  $("#createFun").on("click", function () {
+    var newFun = editor.getValue()
+    var result = Sqrl.Render(myTemplate, newFun)
+    addScript(newFun.name, result)
+    $("#fun_builder").hide();
+  })
+  var newFun = {
+    "name": "pow",
+    "description": "The pow() function returns the base to the exponent power.",
+    "params": [
+      {
+        "name": "base",
+        "description": "lhjglj",
+        "array": false,
+        "typ": "number"
+      },
+      {
+        "name": "exponent",
+        "description": "bbjbhj",
+        "array": false,
+        "typ": "number"
+      }
+    ],
+    "returns": "number",
+    "array": false
+  }
 
-  var editor = new JSONEditor(document.getElementById('fun_editor'), {
+  editor = new JSONEditor(document.getElementById('fun_editor'), {
     schema: {
       type: "object",
       title: "fun",

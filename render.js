@@ -27,7 +27,7 @@ $(document).ready(async function () {
   });
 
   $("#addf").on("click", function () {
-    
+      initFunBuilder()
   })
 
   $("#reloadf").on("click", function () {
@@ -35,12 +35,9 @@ $(document).ready(async function () {
   })
 
   // initScriptView();
-  // initEditor("square");
+  // initEditor("aaVerbrauch");
   // initQueryBuilder();
   // initObjectBuilder("number", {});
-
-  initFunBuilder()
-
 })
 
 function handleError(err) {

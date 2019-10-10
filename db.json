@@ -14,6 +14,15 @@
     },
     {
       "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
     }
   ],
   "synonym": [
@@ -29,88 +38,180 @@
     },
     {
       "typ": 2,
-      "name": "bobable",
+      "name": "aaVerbrauchable",
       "id": 2
     },
     {
-      "typ": 3,
-      "name": "randomIntable",
+      "typ": 0,
+      "name": "km",
       "id": 3
     },
     {
       "typ": 0,
-      "name": "min",
+      "name": "liter",
       "id": 4
     },
     {
-      "typ": 0,
-      "name": "max",
+      "typ": 3,
+      "name": "powable",
       "id": 5
     },
     {
-      "typ": 4,
-      "name": "squareable",
+      "typ": 0,
+      "name": "base",
       "id": 6
     },
     {
       "typ": 0,
-      "name": "a",
+      "name": "exponent",
       "id": 7
+    },
+    {
+      "typ": 4,
+      "name": "bobable",
+      "id": 8
+    },
+    {
+      "typ": 5,
+      "name": "squareable",
+      "id": 9
+    },
+    {
+      "typ": 0,
+      "name": "a",
+      "id": 10
     },
     {
       "typ": 0,
       "name": "b",
-      "id": 8
+      "id": 11
+    },
+    {
+      "typ": 6,
+      "name": "randomIntable",
+      "id": 12
+    },
+    {
+      "typ": 0,
+      "name": "min",
+      "id": 13
+    },
+    {
+      "typ": 0,
+      "name": "max",
+      "id": 14
+    },
+    {
+      "typ": 7,
+      "name": "pow2able",
+      "id": 15
     }
   ],
   "synonym_typ": [],
   "field": [
     {
-      "from_typ": 3,
+      "from_typ": 2,
+      "synonym": 3,
+      "typ": 0,
+      "beschreibung": "gefahrene Killometer"
+    },
+    {
+      "from_typ": 2,
       "synonym": 4,
       "typ": 0,
-      "beschreibung": "the lowest"
+      "beschreibung": "verbrauchte Liter"
     },
     {
       "from_typ": 3,
-      "synonym": 5,
+      "synonym": 6,
       "typ": 0,
-      "beschreibung": "the most"
+      "beschreibung": "lhjglj"
     },
     {
-      "from_typ": 4,
+      "from_typ": 3,
       "synonym": 7,
+      "typ": 0,
+      "beschreibung": "bbjbhj"
+    },
+    {
+      "from_typ": 5,
+      "synonym": 10,
       "typ": 0,
       "beschreibung": "one side"
     },
     {
-      "from_typ": 4,
-      "synonym": 8,
+      "from_typ": 5,
+      "synonym": 11,
       "typ": 0,
       "beschreibung": "other side"
+    },
+    {
+      "from_typ": 6,
+      "synonym": 13,
+      "typ": 0,
+      "beschreibung": "the lowest"
+    },
+    {
+      "from_typ": 6,
+      "synonym": 14,
+      "typ": 0,
+      "beschreibung": "the most"
+    },
+    {
+      "from_typ": 7,
+      "synonym": 6,
+      "typ": 0,
+      "beschreibung": "lhjglj"
+    },
+    {
+      "from_typ": 7,
+      "synonym": 7,
+      "typ": 0,
+      "beschreibung": "bbjbhj"
     }
   ],
   "fun": [
     {
       "param": 2,
+      "returns": 0,
+      "name": "aaVerbrauch",
+      "beschreibung": "rechnet verbrauchte Liter durch gefahrene Km mal hundert um den verbrauch L/100km",
+      "path": "aaVerbrauch.js"
+    },
+    {
+      "param": 3,
+      "returns": 0,
+      "name": "pow",
+      "beschreibung": "The pow() function returns the base to the exponent power.",
+      "path": "pow.js"
+    },
+    {
+      "param": 4,
       "returns": 1,
       "name": "bob",
       "beschreibung": "just gives bob",
       "path": "bob.js"
     },
     {
-      "param": 3,
+      "param": 5,
+      "returns": 0,
+      "name": "square",
+      "beschreibung": "calc the surface of a square",
+      "path": "square.js"
+    },
+    {
+      "param": 6,
       "returns": 0,
       "name": "randomInt",
       "beschreibung": "Give some number",
       "path": "randomInt.js"
     },
     {
-      "param": 4,
+      "param": 7,
       "returns": 0,
-      "name": "square",
-      "beschreibung": "calc the surface of a square",
-      "path": "square.js"
+      "name": "pow2",
+      "beschreibung": "The pow() function returns the base to the exponent power.",
+      "path": "pow2.js"
     }
   ],
   "count": 0
