@@ -10,6 +10,9 @@ $(document).ready(async function () {
   $("#type_editor").hide();
   $("#object_builder").hide();
   $("#fun_builder").hide();
+  $(".calculator").hide();
+
+  
 
   $("#code_editor").hide();
   addFunction("searchf", "orange", "fa-search");
@@ -38,6 +41,7 @@ $(document).ready(async function () {
   // initEditor("aaVerbrauch");
   // initQueryBuilder();
   // initObjectBuilder("number", {});
+  // initCalc(["a", "b", "c", "aLongerOne", "zehn"])
 })
 
 function handleError(err) {

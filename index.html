@@ -4,6 +4,7 @@
 <head>
   <title>sLess</title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="lib/fontawesome5/css/all.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -87,7 +88,7 @@
     </div>
   </div>
 
-  <div class="calculator">
+  <div class="calculator w3-modal w3-modal-content w3-card-4">
     <div class="input" id="input"></div>
     <div class="buttons">
       <div class="operators">
@@ -96,6 +97,9 @@
         <div>&times;</div>
         <div>&divide;</div>
       </div>
+      <div id="vars" class="numbers">
+          
+        </div>
       <div class="leftPanel">
         <div class="numbers">
           <div>7</div>
@@ -117,6 +121,7 @@
           <div>.</div>
           <div id="clear">C</div>
         </div>
+
       </div>
       <div class="equal" id="result">=</div>
     </div>
