@@ -15,7 +15,6 @@ function initEditor(funName) {
 
   let paramhtml = getScriptParams(findFieldsForTyp(script.param));
 
-
   $("#code_header").text("Code-Editor: " + funName + "()")
     .after(paramhtml)
 
@@ -76,14 +75,31 @@ function selectTemplate(item) {
       return selectCreate(item);
     } else if (item.original.action == "call") {
       return selectCall(item);
+    } else if (item.original.action == "key") {
+      return item.original.name;
+    } else if (item.original.action == "calc") {
+      return selectMath()
     }
 
   }
   return "todo"
 }
 
-function selectCall(item) {
+function selectMath() {
+  setTimeout(function () {
+    $(".calc").on("click", function () {
+      initCalc($(this), ["a", "b", "c", "aLongerOne", "zehn"])
+    })
+  }, 100);
+  return $("<div>").append(
+    $('<a href="#" contenteditable="false">')
+      .addClass("calc")
+      .addClass("w3-tag w3-white w3-border-red w3-border w3-round")
+      .text("0")
+  ).html()
+}
 
+function selectCall(item) {
   return $("<div>").append(
     $("<a href='#' class='' contenteditable='false'>").text(item.original.name)
   ).append(
@@ -145,10 +161,14 @@ function addStandarts(posibilitys) {
     name: ".var",
     info: "any",
     action: "var"
-  },{
+  }, {
     name: "return",
-    info: "ret",
-    action: "ret"
+    info: "key",
+    action: "key"
+  }, {
+    name: ".calc",
+    info: "math",
+    action: "calc"
   }]);
 
   return posibilitys;

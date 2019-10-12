@@ -10,7 +10,7 @@ $(document).ready(async function () {
   $("#type_editor").hide();
   $("#object_builder").hide();
   $("#fun_builder").hide();
-  $(".calculator").hide();
+  $("#calculator").hide();
 
   
 
@@ -38,7 +38,7 @@ $(document).ready(async function () {
   })
 
   // initScriptView();
-  // initEditor("aaVerbrauch");
+  initEditor("aaVerbrauch");
   // initQueryBuilder();
   // initObjectBuilder("number", {});
   // initCalc(["a", "b", "c", "aLongerOne", "zehn"])

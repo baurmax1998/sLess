@@ -1,5 +1,11 @@
-function initCalc(vars) {
-  $(".calculator").show()
+function initCalc(elem, vars) {
+  $("#calculator").show()
+  var modal = document.getElementById('calculator');
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      $("#calculator").hide()    
+    }
+  }
 
  for (let i = 0; i < vars.length; i++) {
     const name = vars[i];
@@ -15,6 +21,7 @@ function initCalc(vars) {
   $("#result").on("click", function () {
     var result = $("#input").html();
     console.log(result)
+    elem.html(result)
   })
 
 
