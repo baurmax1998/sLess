@@ -34,9 +34,7 @@ $(document).ready(async function () {
   })
 
   // initScriptView();
-  // initEditor("aaVerbrauch");
-  var lines = await parseCode("aaVerbrauch.js")
-  console.log(lines);
+  initEditor("aaVerbrauch");
   // initQueryBuilder();
   // initObjectBuilder("number", {});
   // initCalc(["a", "b", "c", "aLongerOne", "zehn"])

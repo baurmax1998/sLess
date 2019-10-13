@@ -1,6 +1,8 @@
 let scope = {};
+let jsparser = esprima.parse;
 
-function initEditor(funName) {
+
+async function initEditor(funName) {
   console.log(funName)
   $("#code_editor").show();
 
@@ -18,12 +20,19 @@ function initEditor(funName) {
   $("#code_header").text("Code-Editor: " + funName + "()")
     .after(paramhtml)
 
-  $("#editf").on("click", function () {
-    console.log("hallo")
-    writeFile("./data/scripts/" + scope.active.path, code)
-  });
+  $("#editf").on("click", saveCanges);
 
-  parseCode();
+  let code = await readFile("./data/scripts/" + script.path)
+  let lines = getFunctionLines(code, script)
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line instanceof jQuery) {
+      $("#idContentEditable").append(line)
+    } else {
+      console.error(line)
+    }
+  }
 
 
   var tribute = new Tribute({
@@ -59,7 +68,126 @@ function initEditor(funName) {
     }
     return true;
   })
+}
 
+async function saveCanges() {
+  let code = await readFile("./data/scripts/" + scope.active.path)
+  let ast = jsparser(code, {
+    attachComment: true
+  });
+  for (let i = 0; i < ast.body.length; i++) {
+    let element = ast.body[i];
+    if (element.type === "FunctionDeclaration" && element.id.name === scope.active.name) {
+      ast.body[i].body.body = [{
+        "type": "ReturnStatement",
+        "argument": {
+          "type": "Literal",
+          "value": 42,
+          "raw": "42"
+        }
+      }]
+    }
+  }
+  var newCode = escodegen.generate(ast, {
+    format: {
+      quotes: 'double',
+      semicolons: false,
+    },
+    comment: true,
+  })
+  console.log(newCode)
+  // writeFile("./data/scripts/" + scope.active.path, code)
+}
+
+function allowedInner(element) {
+  if (!["BinaryExpression"
+    , "ConditionalExpression"
+    , "Literal"
+    , "Identifier"
+    , "CallExpression"
+  ].includes(element.type))
+    console.error(element);
+}
+
+function getFunctionLines(code, script) {
+  let ast = jsparser(code);
+  for (let i = 0; i < ast.body.length; i++) {
+    let element = ast.body[i];
+    if (element.type === "FunctionDeclaration" && element.id.name === script.name) {
+      return getLines(element.body.body);
+    }
+  }
+}
+
+function getLines(body) {
+  let lines = [];
+  for (let i = 0; i < body.length; i++) {
+    var element = body[i];
+    var statementLines = write(element);
+    if (Array.isArray(statementLines)) {
+      lines.concat(statementLines)
+    } else {
+      lines.push(statementLines)
+    }
+  }
+  return lines;
+}
+
+
+function write(element) {
+  let type = element.type;
+  if (type === "ExpressionStatement") {
+    return {
+      name: element.expression.callee.name + "()",
+      arguments: element.expression.arguments
+    }
+  } else if (type === "VariableDeclaration") {
+    let init = element.declarations[0].init;
+    // allowedInner(init);
+    return {
+      name: element.declarations[0].id.name,
+      value: write(init)
+    }
+  } else if (type === "BinaryExpression") {
+    var left = write(element.left);
+    if (typeof left == "object")
+      left = left.calc;
+
+    return {
+      calc: left + element.operator + write(element.right)
+    }
+  } else if (type === "ConditionalExpression") {
+    let consequent = element.consequent;
+    let alternate = element.alternate;
+    allowedInner(consequent);
+    allowedInner(alternate);
+    return {
+      conditon: write(element.test),
+      consequent: write(consequent),
+      alternate: write(alternate)
+    }
+  } else if (type === "ReturnStatement") {
+    let expressions = write(element.argument);
+    return {
+      key: "return",
+      returns: expressions
+    };
+  } else if (type === "Literal") {
+    return element.raw;
+  } else if (type === "Identifier") {
+    return element.name; //link
+  } else if (type === "CallExpression") {
+    return {
+      name: element.callee.name + "()",
+      arguments: element.arguments
+    }
+  } else if (type === "IfStatement") {
+    throw new Error("if's are not allowed -> {}less")
+  } else if (type === "FunctionExpression") {
+    throw new Error("Functions are not allowed -> {}less")
+  } else {
+    console.log(element);
+  }
 }
 
 function activeRow() {

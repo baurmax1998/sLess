@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="style.css">
   <script>window.$ = window.jQuery = require("jquery");</script>
   <script src="./lib/esprima/esprima.js"></script>
+  <script src="./lib/esprima/escodegen.browser.js"></script>
   <script src="./lib/json/editor.min.js"></script>
   <script src="./lib/jquery.caret.js"></script>
   <script src="./lib/querybuilder/query-builder.standalone.js"></script>
@@ -58,15 +59,11 @@
   <div id="code_editor">
     <h1 id="code_header">Code Editor</h1>
     <div id="idContentEditable">
-      <div contenteditable="true">
+      <!-- <div contenteditable="true">
         return 
       </div>
       <div contenteditable="true"></div>
-      <div contenteditable="true"></div>
-      <div contenteditable="true"></div>
-      <div contenteditable="true"></div>
-      <div contenteditable="true"></div>
-
+      <div contenteditable="true"></div> -->
     </div>
   </div>
   <div id="query_editor">
@@ -176,7 +173,6 @@
 
   <script src="./lib/floatb/floatbutton.js"></script>
   <script src="./pages/io.js"></script>
-  <script src="./pages/parser.js"></script>
   <script src="./pages/repository.js"></script>
   <script src="./pages/main_page.js"></script>
   <script src="./pages/editor_page.js"></script>

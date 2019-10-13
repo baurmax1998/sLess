@@ -4,7 +4,8 @@
   * @param {number} km gefahrene Killometer
   * @param {number} liter verbrauchte Liter
   * @returns {number}
-  */ 
+  */
 function aaVerbrauch(km, liter) {
+  return 42
   return liter / km * 100
 }
