@@ -18,6 +18,13 @@ function initEditor(funName) {
   $("#code_header").text("Code-Editor: " + funName + "()")
     .after(paramhtml)
 
+  $("#editf").on("click", function () {
+    console.log("hallo")
+    writeFile("./data/scripts/" + scope.active.path, code)
+  });
+
+  parseCode();
+
 
   var tribute = new Tribute({
     allowSpaces: true,
@@ -85,10 +92,23 @@ function selectTemplate(item) {
   return "todo"
 }
 
+function getVars(type) {
+  var vars = []
+  for (let i = 0; i < scope.params.length; i++) {
+    const param = scope.params[i];
+    if (type != undefined || param.typ == type) {
+      vars.push(findSynonymById(param.synonym)[0].name)
+    }
+  }
+  return vars;
+}
+
 function selectMath() {
   setTimeout(function () {
     $(".calc").on("click", function () {
-      initCalc($(this), ["a", "b", "c", "aLongerOne", "zehn"])
+      console.log("hallo")
+      var numberVars = getVars(0);
+      initCalc($(this), numberVars)
     })
   }, 100);
   return $("<div>").append(

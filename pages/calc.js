@@ -3,16 +3,17 @@ function initCalc(elem, vars) {
   var modal = document.getElementById('calculator');
   window.onclick = function (event) {
     if (event.target == modal) {
-      $("#calculator").hide()    
+      $("#calculator").hide()
     }
   }
 
- for (let i = 0; i < vars.length; i++) {
+  $("#vars").html("")
+  for (let i = 0; i < vars.length; i++) {
     const name = vars[i];
     $("#vars").append($("<div>").text(name))
   }
 
-  var input = $("#input");
+  var input = $("#input").text(elem.text());
   var resultDisplayed = false;
 
   $("#clear").on("click", function () {
@@ -20,7 +21,6 @@ function initCalc(elem, vars) {
   })
   $("#result").on("click", function () {
     var result = $("#input").html();
-    console.log(result)
     elem.html(result)
   })
 

@@ -20,10 +20,6 @@ $(document).ready(async function () {
   addFunction("addf", "green", "fa-plus");
   addFunction("reloadf", "red", "fa-sync");
 
-  $("#editf").on("click", function () {
-    $("#main").hide();
-    $("#code_editor").show();
-  });
   $("#searchf").on("click", function () {
     $("#main").show();
     $("#code_editor").hide();
@@ -38,7 +34,8 @@ $(document).ready(async function () {
   })
 
   // initScriptView();
-  initEditor("aaVerbrauch");
+  // initEditor("aaVerbrauch");
+  parseCode("aaVerbrauch.js")
   // initQueryBuilder();
   // initObjectBuilder("number", {});
   // initCalc(["a", "b", "c", "aLongerOne", "zehn"])

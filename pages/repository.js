@@ -192,6 +192,7 @@ function addTypeWithName(name) {
   return id;
 }
 
+
 async function addScript(name, code) {
   var fileName = name + ".js";
   var fin = await writeFile("./data/scripts/" + fileName, code)

@@ -15,6 +15,14 @@ function square(a, b) {
         result + "th";
 }
 
+
+async function parseCode(script) {
+  $("#code_editor").show();
+  let code = await readFile("./data/scripts/" + script)
+  console.log(code)
+
+}
+
 function parseTest() {
   let parser = esprima.parse;
   let ast = parser(square.toString());

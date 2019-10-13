@@ -6,5 +6,5 @@
   * @returns {number}
   */ 
 function aaVerbrauch(km, liter) {
-  
+  return liter / km * 100
 }
