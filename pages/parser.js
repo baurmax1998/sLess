@@ -1,7 +1,11 @@
-
-
-function getTwo() {
-  return "Two";
+function allowedInner(element) {
+  if (!["BinaryExpression"
+    , "ConditionalExpression"
+    , "Literal"
+    , "Identifier"
+    , "CallExpression"
+  ].includes(element.type))
+    console.error(element);
 }
 
 function square(a, b) {
@@ -16,23 +20,20 @@ function square(a, b) {
 }
 
 
-async function parseCode(script) {
-  $("#code_editor").show();
-  let code = await readFile("./data/scripts/" + script)
-  console.log(code)
-
-}
-
-function parseTest() {
-  let parser = esprima.parse;
-  let ast = parser(square.toString());
-  for (let i = 0; i < ast.body.length; i++) {
-    let element = ast.body[i];
-    if (element.type === "FunctionDeclaration" && element.id.name === "square") {
-      getLines(element.body.body)
+function parseCode(script) {
+  return new Promise(async resolve => {
+    let code = await readFile("./data/scripts/" + script)
+    let parser = esprima.parse;
+    let ast = parser(code);
+    for (let i = 0; i < ast.body.length; i++) {
+      let element = ast.body[i];
+      if (element.type === "FunctionDeclaration" && element.id.name === script.split(".")[0]) {
+        resolve(getLines(element.body.body));
+      }
     }
-  }
+  });
 }
+
 
 function getLines(body) {
   let lines = [];
@@ -45,18 +46,10 @@ function getLines(body) {
       lines.push(statementLines)
     }
   }
-  console.log(lines);
+  return lines;
 }
 
-function allowedInner(element) {
-  if (!["BinaryExpression"
-    , "ConditionalExpression"
-    , "Literal"
-    , "Identifier"
-    , "CallExpression"
-  ].includes(element.type))
-    console.error(element);
-}
+
 
 function write(element) {
   let type = element.type;
@@ -73,8 +66,12 @@ function write(element) {
       value: write(init)
     }
   } else if (type === "BinaryExpression") {
+    var left = write(element.left);
+    if (typeof left == "object")
+      left = left.calc;
+
     return {
-      operator: element.operator
+      calc: left + element.operator + write(element.right)
     }
   } else if (type === "ConditionalExpression") {
     let consequent = element.consequent;
@@ -86,11 +83,12 @@ function write(element) {
       consequent: write(consequent),
       alternate: write(alternate)
     }
-
   } else if (type === "ReturnStatement") {
     let expressions = write(element.argument);
-    console.log("return");
-    return expressions;
+    return {
+      key: "return",
+      returns: expressions
+    };
   } else if (type === "Literal") {
     return element.raw;
   } else if (type === "Identifier") {
