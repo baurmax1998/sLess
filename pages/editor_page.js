@@ -71,6 +71,21 @@ async function initEditor(funName) {
 }
 
 async function saveCanges() {
+  var lines = $("#idContentEditable").children()
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = $(lines[i]);
+    let childs = line.children();
+    let codeLine = ""
+    for (let x = 0; x < childs.length; x++) {
+      const child = $(childs[x]);
+      codeLine += " " + child.text()
+      
+    }
+    console.log(codeLine)
+  }
+  
+  return;
   let code = await readFile("./data/scripts/" + scope.active.path)
   let ast = jsparser(code, {
     attachComment: true
@@ -81,9 +96,23 @@ async function saveCanges() {
       ast.body[i].body.body = [{
         "type": "ReturnStatement",
         "argument": {
-          "type": "Literal",
-          "value": 42,
-          "raw": "42"
+          "type": "BinaryExpression",
+          "operator": "*",
+          "left": {
+            "type": "BinaryExpression",
+            "operator": "/",
+            "left": {
+              "type": "Identifier",
+              "name": "liter"
+            }, "right": {
+              "type": "Identifier",
+              "name": "km"
+            }
+          }, "right": {
+            "type": "Literal",
+            "value": 100,
+            "raw": "100"
+          }
         }
       }]
     }
@@ -137,11 +166,13 @@ function getLines(body) {
 function write(element) {
   let type = element.type;
   if (type === "ExpressionStatement") {
+    throw new Error("todo")
     return {
       name: element.expression.callee.name + "()",
       arguments: element.expression.arguments
     }
   } else if (type === "VariableDeclaration") {
+    throw new Error("todo")
     let init = element.declarations[0].init;
     // allowedInner(init);
     return {
@@ -149,14 +180,14 @@ function write(element) {
       value: write(init)
     }
   } else if (type === "BinaryExpression") {
-    var left = write(element.left);
-    if (typeof left == "object")
-      left = left.calc;
-
-    return {
-      calc: left + element.operator + write(element.right)
-    }
+    var left = write(element.left)
+    var right = write(element.right)
+    return $('<a href="#" contenteditable="false">')
+    .addClass("calc")
+    .addClass("w3-tag w3-white w3-border-red w3-border w3-round")
+    .text(left.text() + element.operator + right.text())
   } else if (type === "ConditionalExpression") {
+    throw new Error("todo")
     let consequent = element.consequent;
     let alternate = element.alternate;
     allowedInner(consequent);
@@ -168,22 +199,23 @@ function write(element) {
     }
   } else if (type === "ReturnStatement") {
     let expressions = write(element.argument);
-    return {
-      key: "return",
-      returns: expressions
-    };
+    return $("<div contenteditable='true'>")
+      .append($("<span class='returns'>").text("return"))
+      .append(expressions)
   } else if (type === "Literal") {
-    return element.raw;
+    return $("<span class='value'>").text( element.raw);
   } else if (type === "Identifier") {
-    return element.name; //link
+    return $("<a class='ref' href='#'>").text(element.name) //link
   } else if (type === "CallExpression") {
     return {
       name: element.callee.name + "()",
       arguments: element.arguments
     }
   } else if (type === "IfStatement") {
+    throw new Error("todo")
     throw new Error("if's are not allowed -> {}less")
   } else if (type === "FunctionExpression") {
+    throw new Error("todo")
     throw new Error("Functions are not allowed -> {}less")
   } else {
     console.log(element);

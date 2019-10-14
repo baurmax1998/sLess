@@ -1,3 +1,19 @@
+.returns {
+  margin-right: 2px;
+}
+
+.ref{
+  margin: 0px 2px;
+}
+
+.operator{
+  margin: 0px 2px;
+}
+
+.value{
+  margin: 0px 2px;
+}
+
 /* Controls */
 
 .search {
