@@ -26,7 +26,6 @@ function initScriptView() {
   // Filter bindings.
   filterField.addEventListener('change', filter);
   // Add/remove items bindings.
-  $('.add-more-items').on('click', addItems);
   gridElement.addEventListener('click', function (e) {
     if (elementMatches(e.target, '.card-remove, .card-remove i')) {
       removeItem(e);
@@ -97,16 +96,6 @@ function filter() {
     var isFilterMatch = !filterFieldValue ? true : (element.getAttribute('data-color') || '') === filterFieldValue;
     return isSearchMatch && isFilterMatch;
   });
-}
-
-function addItems() {
-  var newElems = generateElements(5);
-  newElems.forEach(function (item) {
-    item.style.display = 'none';
-  });
-  grid.add(newElems);
-  updateIndices();
-  filter();
 }
 
 function removeItem(e) {

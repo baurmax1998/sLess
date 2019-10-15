@@ -22,7 +22,7 @@ async function initEditor(funName) {
 
   $("#editf").on("click", saveCanges);
 
-  let code = await readFile("./data/scripts/" + script.path)
+  let code = await readFile(scriptPathConfig + script.path)
   let lines = getFunctionLines(code, script)
 
   for (let i = 0; i < lines.length; i++) {
@@ -33,6 +33,8 @@ async function initEditor(funName) {
       console.error(line)
     }
   }
+
+  initCalcEvent()
 
 
   var tribute = new Tribute({
@@ -73,6 +75,7 @@ async function initEditor(funName) {
 async function saveCanges() {
   var lines = $("#idContentEditable").children()
 
+  var codeLines = ""
   for (let i = 0; i < lines.length; i++) {
     let line = $(lines[i]);
     let childs = line.children();
@@ -80,41 +83,19 @@ async function saveCanges() {
     for (let x = 0; x < childs.length; x++) {
       const child = $(childs[x]);
       codeLine += " " + child.text()
-      
     }
-    console.log(codeLine)
+    codeLines += codeLine + "\n";
   }
+  let newLines = jsparser(codeLines,{ tolerant: true }).body
   
-  return;
-  let code = await readFile("./data/scripts/" + scope.active.path)
+  let code = await readFile(scriptPathConfig + scope.active.path)
   let ast = jsparser(code, {
     attachComment: true
   });
   for (let i = 0; i < ast.body.length; i++) {
     let element = ast.body[i];
     if (element.type === "FunctionDeclaration" && element.id.name === scope.active.name) {
-      ast.body[i].body.body = [{
-        "type": "ReturnStatement",
-        "argument": {
-          "type": "BinaryExpression",
-          "operator": "*",
-          "left": {
-            "type": "BinaryExpression",
-            "operator": "/",
-            "left": {
-              "type": "Identifier",
-              "name": "liter"
-            }, "right": {
-              "type": "Identifier",
-              "name": "km"
-            }
-          }, "right": {
-            "type": "Literal",
-            "value": 100,
-            "raw": "100"
-          }
-        }
-      }]
+      ast.body[i].body.body = newLines;
     }
   }
   var newCode = escodegen.generate(ast, {
@@ -124,8 +105,8 @@ async function saveCanges() {
     },
     comment: true,
   })
-  console.log(newCode)
-  // writeFile("./data/scripts/" + scope.active.path, code)
+  writeFile(scriptPathConfig + scope.active.path, newCode)
+  console.log("Saved")
 }
 
 function allowedInner(element) {
@@ -263,14 +244,16 @@ function getVars(type) {
   return vars;
 }
 
+function initCalcEvent(){
+  $(".calc").unbind( "click" ).on("click", function () {
+    console.log("hallo")
+    var numberVars = getVars(0);
+    initCalc($(this), numberVars)
+  })
+}
+
 function selectMath() {
-  setTimeout(function () {
-    $(".calc").on("click", function () {
-      console.log("hallo")
-      var numberVars = getVars(0);
-      initCalc($(this), numberVars)
-    })
-  }, 100);
+  setTimeout(initCalcEvent, 100);
   return $("<div>").append(
     $('<a href="#" contenteditable="false">')
       .addClass("calc")

@@ -1,6 +1,8 @@
 const fs = require("fs");
 const parser = require("jsdoc3-parser");
 let todos = [];
+// const scriptPathConfig ="./data/scripts/"
+const scriptPathConfig ="./data/todoapp/"
 
 
 $(document).ready(async function () {
@@ -33,8 +35,8 @@ $(document).ready(async function () {
     loadScripts()
   })
 
-  // initScriptView();
-  initEditor("aaVerbrauch");
+  initScriptView();
+  // initEditor("aaVerbrauch");
   // initQueryBuilder();
   // initObjectBuilder("number", {});
   // initCalc(["a", "b", "c", "aLongerOne", "zehn"])

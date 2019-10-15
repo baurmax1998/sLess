@@ -1,4 +1,4 @@
-/*!
+/*
  * jQuery FAB Button v1.0.0 (https://github.com/smachs/jquery-fab-button)
  * Copyright 2014-2018 Materialize & Smachs
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
@@ -150,4 +150,4 @@ button.btn-floating {
 
 .fixed-action-btn ul a.btn-floating {
   opacity: 0;
-}
+} 

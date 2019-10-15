@@ -195,13 +195,13 @@ function addTypeWithName(name) {
 
 async function addScript(name, code) {
   var fileName = name + ".js";
-  var fin = await writeFile("./data/scripts/" + fileName, code)
+  var fin = await writeFile(scriptPathConfig + fileName, code)
   loadScript(fileName);
 }
 
 async function loadScripts() {
   databaseReadyAndFilledWithDefaults();
-  let scriptPath = "./data/scripts/"
+  let scriptPath = scriptPathConfig
   let paths = await readPaths(scriptPath)
   for (let i = 0; i < paths.length; i++) {
     const path = paths[i];
@@ -211,7 +211,7 @@ async function loadScripts() {
 }
 
 async function loadScript(fileName) {
-  let doc = await parseDoc("./data/scripts/" + fileName);
+  let doc = await parseDoc(scriptPathConfig + fileName);
   if (doc == null || doc.undocumented) {
     todos.push("Das Script: " + fileName + " konnte nicht mit JSDoc gelesen werden!!")
     return;
