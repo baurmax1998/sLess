@@ -1,3 +1,4 @@
+
 var Sqrl = require("squirrelly");
 var editor;
 
@@ -22,45 +23,27 @@ function {{name}}({{each(options.params)}}
 }
 `
 
-function initFunBuilder() {
-  $("#fun_builder").show();
-  var modal = document.getElementById('fun_builder');
+
+
+function initTypeEditor() {
+  $("#type_builder").show();
+  var modal = document.getElementById('type_builder');
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
     }
   }
   $("#createFun").on("click", function () {
-    var newFun = editor.getValue()
-    var result = Sqrl.Render(myTemplate, newFun)
-    addScript(newFun.name, result)
-    $("#fun_builder").hide();
+    var newType = editor.getValue()
+    var result = Sqrl.Render(myTemplate, newType)
+    console.log("todo")
+    $("#type_builder").hide();
   })
-  // var newFun = {
-  //   "name": "pow",
-  //   "description": "The pow() function returns the base to the exponent power.",
-  //   "params": [
-  //     {
-  //       "name": "base",
-  //       "description": "lhjglj",
-  //       "array": false,
-  //       "typ": "number"
-  //     },
-  //     {
-  //       "name": "exponent",
-  //       "description": "bbjbhj",
-  //       "array": false,
-  //       "typ": "number"
-  //     }
-  //   ],
-  //   "returns": "number",
-  //   "array": false
-  // }
 
-  editor = new JSONEditor(document.getElementById('fun_editor'), {
+  editor = new JSONEditor(document.getElementById('type_editor'), {
     schema: {
       type: "object",
-      title: "fun",
+      title: "typ",
       properties: {
         name: {
           type: "string"
@@ -69,21 +52,13 @@ function initFunBuilder() {
           type: "string",
           format: "textarea"
         },
-        params: {
+        fields: {
           type: "array",
           format: "tabs",
           items: {
-            title: "Param",
+            title: "Field",
             $ref: "#/definitions/field"
           }
-        },
-        returns: {
-          $ref: "#/definitions/typ"
-        },
-        array: {
-          type: "boolean",
-          title: "returns array",
-          default: false
         }
       },
       definitions: {

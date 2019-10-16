@@ -33,6 +33,7 @@ async function initEditor(funName) {
       console.error(line)
     }
   }
+  $("#idContentEditable").append($("<div contenteditable='true'>"))
 
   initCalcEvent()
 

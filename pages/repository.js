@@ -230,7 +230,8 @@ async function loadScript(fileName) {
     let synonym = addOrGetSynonym(typOfParam, param.name);
     add(tables.field, field(paramsTyp, synonym, typOfParam, param.description))
   }
-  let typOfReturn = findTypForSynonym(meta.returns[0].type.names[0])[0].typ;
-
-  add(tables.fun, fun(paramsTyp, typOfReturn, meta.name, meta.description, fileName))
+  var returns = meta.returns;
+  if (returns) 
+   returns = findTypForSynonym(returns[0].type.names[0])[0].typ;
+  add(tables.fun, fun(paramsTyp, returns, meta.name, meta.description, fileName))
 }

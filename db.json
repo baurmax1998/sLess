@@ -5,6 +5,9 @@
     },
     {
       "id": 1
+    },
+    {
+      "id": 2
     }
   ],
   "synonym": [
@@ -17,10 +20,22 @@
       "typ": 1,
       "name": "string",
       "id": 1
+    },
+    {
+      "typ": 2,
+      "name": "mainable",
+      "id": 2
     }
   ],
   "synonym_typ": [],
   "field": [],
-  "fun": [],
+  "fun": [
+    {
+      "param": 2,
+      "name": "main",
+      "beschreibung": "startpoint",
+      "path": "main.js"
+    }
+  ],
   "count": 0
 }

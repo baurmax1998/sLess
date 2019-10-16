@@ -1,0 +1,7 @@
+
+/**
+  * startpoint
+  */ 
+function main() {
+  
+}

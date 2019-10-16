@@ -44,7 +44,7 @@ async function initGrid() {
       scripts[i]
     ));
   }
-  
+
   grid = new Muuri(gridElement, {
     items: ret,
     layoutDuration: 400,
@@ -230,7 +230,7 @@ function getScriptParams(params) {
   for (let i = 0; i < params.length; i++) {
     const param = params[i];
     let paramName = findSynonymById(param.synonym)[0];
-    let paramTyp = findSynonymForTyp( param.typ)[0]
+    let paramTyp = findSynonymForTyp(param.typ)[0]
     paramsElement.append(
       $("<span class='param'>").attr("title", param.beschreibung)
         .append($("<span>").text(paramName.name))
@@ -241,8 +241,9 @@ function getScriptParams(params) {
 }
 
 function getScriptReturn(returns) {
-  return $("<p>")
-    .append(
-      $("<a href='#' class='w3-tag w3-round'>")
-        .text(returns.name))
+  if (returns)
+    return $("<p>")
+      .append(
+        $("<a href='#' class='w3-tag w3-round'>")
+          .text(returns.name))
 }
