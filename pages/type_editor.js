@@ -2,27 +2,17 @@
 var Sqrl = require("squirrelly");
 var editor;
 
-var myTemplate = `
+var typTemplate = `
 /**
-  * {{description}}
-
-  {{each(options.params)}}
-* @param {{{@this.typ}}{{if(@this.array)}}[]{{/if}}} {{@this.name}} {{@this.description}}
+  * {{description}} 
+  * @typedef {{{if(options.fields.length === 0)}}native{{#else}}object{{/if}}} {{name}}
+  
+  {{each(options.fields)}}
+* @property {{{@this.typ}}{{if(@this.array)}}[]{{/if}}} {{@this.name}} {{@this.description}}
 
   {{/each}}
-{{if(options.returns != undefined)}}
-* @returns {{{returns}}{{if(options.array)}}[]{{/if}}}
-{{/if}}
-*/ 
-function {{name}}({{each(options.params)}}
-{{@this.name}}
-{{if(@index + 1 < options.params.length)}}, {{/if}}
-{{/each}}
-) {
-  
-}
+**/
 `
-
 
 
 function initTypeEditor() {
@@ -33,12 +23,14 @@ function initTypeEditor() {
       modal.style.display = "none";
     }
   }
-  $("#createFun").on("click", function () {
+  $("#createTyp").on("click", function () {
     var newType = editor.getValue()
-    var result = Sqrl.Render(myTemplate, newType)
-    console.log("todo")
+    var result = Sqrl.Render(typTemplate, newType)
+    addScript(newType.name, result)
     $("#type_builder").hide();
   })
+
+  $("#type_editor").html("")
 
   editor = new JSONEditor(document.getElementById('type_editor'), {
     schema: {
@@ -103,5 +95,6 @@ function initTypeEditor() {
       }
     }
   });
-  // editor.setValue(newFun)
+  var newType = { "name": "asdf", "description": "asdfasdf", "fields": [] }
+  editor.setValue(newType)
 }

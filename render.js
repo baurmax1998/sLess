@@ -2,10 +2,9 @@ const fs = require("fs");
 const parser = require("jsdoc3-parser");
 let todos = [];
 // const scriptPathConfig ="./data/scripts/"
-const scriptPathConfig = "./data/todoapp/"
+const scriptPathConfig = "./data/express/"
 
-
-$(document).ready(async function () {
+function hideAll() {
   $("#main").hide();
   $("#code_editor").hide();
   $("#query_editor").hide();
@@ -14,9 +13,12 @@ $(document).ready(async function () {
   $("#object_builder").hide();
   $("#fun_builder").hide();
   $("#calculator").hide();
+}
 
+
+$(document).ready(async function () {
   
-
+  hideAll()
 
 
   $("#code_editor").hide();
@@ -25,30 +27,42 @@ $(document).ready(async function () {
   addFunction("editf", "DARKORCHID", "fa-edit");
   addFunction("searchf", "orange", "fa-search");
   addFunction("addTypef", "PLUM", "fa-dna");
+  addFunction("viewTypef", "PLUM", "fa-tasks");
 
-  $("#searchf").on("click", function () {
+
+  $("#searchf").on("click", function () {  
+    hideAll()
     $("#main").show();
-    $("#code_editor").hide();
   });
 
+  $("#viewTypef").on("click", function () {
+    hideAll()
+    initTypeView()
+  })
+
   $("#addTypef").on("click", function () {
-    initFunBuilder()
+    hideAll()
+    initTypeEditor()
   })
 
   $("#addf").on("click", function () {
+    hideAll()
     initFunBuilder()
   })
 
   $("#reloadf").on("click", function () {
+    hideAll()
     loadScripts()
   })
 
-  // initScriptView();
+  initScriptView();
   // initEditor("aaVerbrauch");
   // initQueryBuilder();
   // initObjectBuilder("number", {});
   // initCalc(["a", "b", "c", "aLongerOne", "zehn"])
-  initTypeEditor()
+  // initTypeEditor()
+  // initTypeView()
+
 
 })
 

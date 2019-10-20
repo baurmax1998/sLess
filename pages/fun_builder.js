@@ -1,7 +1,7 @@
 var Sqrl = require("squirrelly");
 var editor;
 
-var myTemplate = `
+var funTemplate = `
 /**
   * {{description}}
 
@@ -32,32 +32,27 @@ function initFunBuilder() {
   }
   $("#createFun").on("click", function () {
     var newFun = editor.getValue()
-    var result = Sqrl.Render(myTemplate, newFun)
+    var result = Sqrl.Render(funTemplate, newFun)
     addScript(newFun.name, result)
     $("#fun_builder").hide();
   })
-  // var newFun = {
-  //   "name": "pow",
-  //   "description": "The pow() function returns the base to the exponent power.",
-  //   "params": [
-  //     {
-  //       "name": "base",
-  //       "description": "lhjglj",
-  //       "array": false,
-  //       "typ": "number"
-  //     },
-  //     {
-  //       "name": "exponent",
-  //       "description": "bbjbhj",
-  //       "array": false,
-  //       "typ": "number"
-  //     }
-  //   ],
-  //   "returns": "number",
-  //   "array": false
-  // }
 
-  editor = new JSONEditor(document.getElementById('fun_editor'), {
+  var typs = {
+    id: "typ",
+    type: "string",
+    enum: [
+      "object"
+    ],
+    default: "string"
+  }
+
+  var allSynonyms = getAllSynonyms();
+  for (let i = 0; i < allSynonyms.length; i++) {
+    const synonym = allSynonyms[i];
+    typs.enum.push(synonym.name)
+  }
+
+  var config = {
     schema: {
       type: "object",
       title: "fun",
@@ -87,18 +82,7 @@ function initFunBuilder() {
         }
       },
       definitions: {
-        typ: {
-          id: "typ",
-          type: "string",
-          enum: [
-            "string",
-            "number",
-            "bool",
-            "object",
-            "ToDo:ParamType"
-          ],
-          default: "String"
-        },
+        typ: typs,
         field: {
           type: "object",
           id: "field",
@@ -127,6 +111,8 @@ function initFunBuilder() {
         }
       }
     }
-  });
-  // editor.setValue(newFun)
+  }
+
+
+  editor = new JSONEditor(document.getElementById('fun_editor'), config);
 }

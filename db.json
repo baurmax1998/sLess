@@ -8,6 +8,27 @@
     },
     {
       "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
+    },
+    {
+      "id": 8
+    },
+    {
+      "id": 9
     }
   ],
   "synonym": [
@@ -23,18 +44,149 @@
     },
     {
       "typ": 2,
-      "name": "mainable",
+      "name": "bool",
       "id": 2
+    },
+    {
+      "typ": 3,
+      "name": "object",
+      "id": 3
+    },
+    {
+      "typ": 4,
+      "name": "AppConfig",
+      "id": 4
+    },
+    {
+      "typ": 1,
+      "name": "name",
+      "id": 5
+    },
+    {
+      "typ": 2,
+      "name": "frontend",
+      "id": 6
+    },
+    {
+      "typ": 5,
+      "name": "Array.<object>",
+      "id": 7
+    },
+    {
+      "typ": 5,
+      "name": "routings",
+      "id": 8
+    },
+    {
+      "typ": 0,
+      "name": "port",
+      "id": 9
+    },
+    {
+      "typ": 6,
+      "name": "mainable",
+      "id": 10
+    },
+    {
+      "typ": 7,
+      "name": "NodejsProject",
+      "id": 11
+    },
+    {
+      "typ": 1,
+      "name": "path",
+      "id": 12
+    },
+    {
+      "typ": 8,
+      "name": "buildable",
+      "id": 13
+    },
+    {
+      "typ": 4,
+      "name": "config",
+      "id": 14
+    },
+    {
+      "typ": 9,
+      "name": "runable",
+      "id": 15
+    },
+    {
+      "typ": 7,
+      "name": "project",
+      "id": 16
+    },
+    {
+      "typ": 2,
+      "name": "debug",
+      "id": 17
     }
   ],
   "synonym_typ": [],
-  "field": [],
+  "field": [
+    {
+      "from_typ": 4,
+      "synonym": 5,
+      "typ": 1
+    },
+    {
+      "from_typ": 4,
+      "synonym": 6,
+      "typ": 2
+    },
+    {
+      "from_typ": 4,
+      "synonym": 8,
+      "typ": 5
+    },
+    {
+      "from_typ": 4,
+      "synonym": 9,
+      "typ": 0
+    },
+    {
+      "from_typ": 7,
+      "synonym": 12,
+      "typ": 1,
+      "beschreibung": "folder with the name of the projekt"
+    },
+    {
+      "from_typ": 8,
+      "synonym": 14,
+      "typ": 4
+    },
+    {
+      "from_typ": 9,
+      "synonym": 16,
+      "typ": 7
+    },
+    {
+      "from_typ": 9,
+      "synonym": 17,
+      "typ": 2,
+      "beschreibung": "starts the depugger"
+    }
+  ],
   "fun": [
     {
-      "param": 2,
+      "param": 6,
       "name": "main",
       "beschreibung": "startpoint",
       "path": "main.js"
+    },
+    {
+      "param": 8,
+      "returns": 7,
+      "name": "build",
+      "beschreibung": "build or extends a node.js projekt for an express app config",
+      "path": "build.js"
+    },
+    {
+      "param": 9,
+      "name": "run",
+      "beschreibung": "runs an node.js project",
+      "path": "run.js"
     }
   ],
   "count": 0

@@ -131,6 +131,14 @@ function findTypForSynonym(synonym) {
     .value();
 }
 
+function findTypForSynonymOrCreate(synonym) {
+  var synonymObject = findTypForSynonym(synonym)[0];
+  if(synonymObject == undefined){
+    addTypeWithName(synonym)
+  }
+  return findTypForSynonym(synonym)
+}
+
 function findSynonymTypForTyp(typ_id) {
   let findFieldsForTyp = findFieldsForTyp(typ_id)
   return findSynonymTypForFields(findFieldsForTyp);
@@ -168,6 +176,10 @@ function databaseReadyAndFilledWithDefaults() {
   }).write();
   addTypeWithName("number")
   addTypeWithName("string")
+  addTypeWithName("bool")
+  addTypeWithName("object")
+
+
 }
 
 function addOrGetSynonym(typ, name) {
@@ -209,6 +221,36 @@ async function loadScripts() {
   }
   console.log("scripts loaded")
 }
+var test = {
+  "name": "AppConfig",
+  "description": "A config for a express app",
+  "fields": [
+    {
+      "name": "name",
+      "description": "",
+      "array": false,
+      "typ": "string"
+    },
+    {
+      "name": "frontend",
+      "description": "",
+      "array": false,
+      "typ": "bool"
+    },
+    {
+      "name": "routings",
+      "description": "",
+      "array": true,
+      "typ": "object"
+    },
+    {
+      "name": "port",
+      "description": "",
+      "array": false,
+      "typ": "number"
+    }
+  ]
+}
 
 async function loadScript(fileName) {
   let doc = await parseDoc(scriptPathConfig + fileName);
@@ -216,22 +258,34 @@ async function loadScript(fileName) {
     todos.push("Das Script: " + fileName + " konnte nicht mit JSDoc gelesen werden!!")
     return;
   }
-  var meta = {
-    name: doc.name,
-    description: doc.description,
-    params: doc.params,
-    returns: doc.returns,
-    path: doc.meta.path + "/" + doc.meta.filename,
-  };
-  let paramsTyp = addTypeWithName(meta.name + "able");
-  for (let i = 0; i < meta.params.length; i++) {
-    const param = meta.params[i];
-    let typOfParam = findTypForSynonym(param.type.names[0])[0].typ;
-    let synonym = addOrGetSynonym(typOfParam, param.name);
-    add(tables.field, field(paramsTyp, synonym, typOfParam, param.description))
+  if(doc.kind == "typedef"){
+    let typ = addTypeWithName(doc.name);
+    let props = doc.properties?doc.properties: [];
+    for (let i = 0; i < props.length; i++) {
+      const param = props[i];
+      let typOfParam = findTypForSynonymOrCreate(param.type.names[0])[0].typ;
+      let synonym = addOrGetSynonym(typOfParam, param.name);
+      add(tables.field, field(typ, synonym, typOfParam, param.description))
+    }
+  } else {
+    var meta = {
+      name: doc.name,
+      description: doc.description,
+      params: doc.params,
+      returns: doc.returns,
+      path: doc.meta.path + "/" + doc.meta.filename,
+    };
+    let paramsTyp = addTypeWithName(meta.name + "able");
+    for (let i = 0; i < meta.params.length; i++) {
+      const param = meta.params[i];
+      let typOfParam = findTypForSynonymOrCreate(param.type.names[0])[0].typ;
+      let synonym = addOrGetSynonym(typOfParam, param.name);
+      add(tables.field, field(paramsTyp, synonym, typOfParam, param.description))
+    }
+    var returns = meta.returns;
+    if (returns) 
+     returns = findTypForSynonym(returns[0].type.names[0])[0].typ;
+    add(tables.fun, fun(paramsTyp, returns, meta.name, meta.description, fileName))
   }
-  var returns = meta.returns;
-  if (returns) 
-   returns = findTypForSynonym(returns[0].type.names[0])[0].typ;
-  add(tables.fun, fun(paramsTyp, returns, meta.name, meta.description, fileName))
+  
 }
