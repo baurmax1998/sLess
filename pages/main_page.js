@@ -144,6 +144,9 @@ function generateElement(id, meta) {
           .append(
             $("<a class='w3-round w3-button w3-light-grey w3-tiny' href='#'>").append(
               $('<i class="fa fa-play">')))
+              .on("click", function () {
+                runAny(meta) 
+              })
           .append(
             $("<a class='w3-round w3-button w3-light-grey w3-tiny' href='#'>").append(
               $('<i class="fa fa-bread-slice">')))
