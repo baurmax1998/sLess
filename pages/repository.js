@@ -33,6 +33,11 @@ function getAllFuns() {
   return getAll(tables.fun);
 }
 
+function getAllFields() {
+  return getAll(tables.field);
+}
+
+
 function getAll(tableName) {
   return db.get(tableName).value();
 }

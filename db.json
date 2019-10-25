@@ -29,6 +29,9 @@
     },
     {
       "id": 9
+    },
+    {
+      "id": 10
     }
   ],
   "synonym": [
@@ -121,6 +124,16 @@
       "typ": 2,
       "name": "debug",
       "id": 17
+    },
+    {
+      "typ": 10,
+      "name": "logable",
+      "id": 18
+    },
+    {
+      "typ": 3,
+      "name": "toLog",
+      "id": 19
     }
   ],
   "synonym_typ": [],
@@ -166,6 +179,11 @@
       "synonym": 17,
       "typ": 2,
       "beschreibung": "starts the depugger"
+    },
+    {
+      "from_typ": 10,
+      "synonym": 19,
+      "typ": 3
     }
   ],
   "fun": [
@@ -187,6 +205,12 @@
       "name": "run",
       "beschreibung": "runs an node.js project",
       "path": "run.js"
+    },
+    {
+      "param": 10,
+      "name": "log",
+      "beschreibung": "log it",
+      "path": "log.js"
     }
   ],
   "count": 0

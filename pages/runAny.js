@@ -1,6 +1,8 @@
 
 function runAny(meta) {
-  console.log(meta)
+  var Sqrl = require("squirrelly");
+  Sqrl.autoEscaping(false)
+
   var fs = require('fs');
   var dir = './tmp';
 
@@ -8,9 +10,7 @@ function runAny(meta) {
     fs.mkdirSync(dir);
   }
 
-  var package =
-
-    writeFile("./tmp/package.json", `{
+  var package = writeFile("./tmp/package.json", `{
     "name": "tmp",
     "version": "1.0.0",
     "description": "",
@@ -22,27 +22,85 @@ function runAny(meta) {
     "license": "ISC"
   }`)
 
-  writeFile("./tmp/index.js", `
-  console.log(__dirname)
+  let indexjsTempl = `
   var fs = require('fs');
-  eval(fs.readFileSync(__dirname+'/../data/express/main.js')+'');
+
+  Object.prototype.isTyp = function (fields) {
+    var keys =  Object.keys(this)
+    return fields.every(function(field){return keys.includes(field)})
+  };
+
+  Object.prototype.wrap = function () {
+    return wrap(this)
+  };
+
+  let Types = {{typesString}}
+
+  function wrap(object){
+{{each(options.funs)}}
+    if(object.isTyp(Types[{{@this.typ}}].fields))
+      {{@this.name}}()
+{{/each}}
+  }
+  
+{{each(options.funs)}}
+  eval(fs.readFileSync(__dirname+'/../data/express/{{@this.path}}')+'');
+{{/each}}
+
+
   main()
-  `)
+  `
 
-  const { spawn } = require('child_process');
-  const debugg = spawn('node', ['./tmp/index.js']);
+  var allFuns = getAllFuns()
+  var allSynonyms = getAllSynonyms()
+  var allFields = getAllFields()
 
-  debugg.stdout.on('data', (data) => {
-    console.log(`stdout: ${data}`);
-  });
+  var synonymsToTyp = Stream(allSynonyms).groupBy("typ")
 
-  debugg.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
-  });
+  var fieldsToTyp = Stream(allFields)
+  .map(function (field) {
+    field.name = findSynonymById(field.synonym)[0].name
+    field.typname = findSynonymForTyp(field.typ)[0].name
+    return field;
+  })
+  .groupBy("from_typ")
 
-  debugg.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
-  });
+  var Types = {}
+  for(var key in fieldsToTyp){
+    Types[key] = {
+      names: synonymsToTyp[key],
+      fields: fieldsToTyp[key]
+    }
+  }
+
+
+
+
+  var indexjs = Sqrl.Render(indexjsTempl, {
+    funs: allFuns,
+    typesString: JSON.stringify(Types)
+  })
+
+
+  
+
+  writeFile("./tmp/index.js", indexjs)
+  console.log(indexjs)
+
+  // const { spawn } = require('child_process');
+  // const debugg = spawn('node', ['./tmp/index.js']);
+
+  // debugg.stdout.on('data', (data) => {
+  //   console.log(`stdout: ${data}`);
+  // });
+
+  // debugg.stderr.on('data', (data) => {
+  //   console.error(`stderr: ${data}`);
+  // });
+
+  // debugg.on('close', (code) => {
+  //   console.log(`child process exited with code ${code}`);
+  // });
 
 }
 
