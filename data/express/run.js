@@ -5,5 +5,6 @@
   * @param {bool} debug starts the depugger
   */ 
 function run(project, debug) {
-  
+  console.log(project)
+  console.log(debug)
 }

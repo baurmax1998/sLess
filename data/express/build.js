@@ -5,5 +5,8 @@
   * @returns {NodejsProject}
 */ 
 function build(config) {
-  
+  console.log(config.name)
+  console.log(config.frontend)
+  console.log(config.routings)
+  console.log(config.port)
 }
