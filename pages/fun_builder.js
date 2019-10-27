@@ -13,7 +13,7 @@ var funTemplate = `
 * @returns {{{returns}}{{if(options.array)}}[]{{/if}}}
 {{/if}}
 */ 
-function {{name}}({{each(options.params)}}
+exports.fun = function {{name}}({{each(options.params)}}
 {{@this.name}}
 {{if(@index + 1 < options.params.length)}}, {{/if}}
 {{/each}}

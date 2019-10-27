@@ -1,7 +1,38 @@
 function runAny(meta) {
-  // var fs = require('fs');
-  // var jsparse = require(__dirname + '/../lib/esprima/esprima.js')
 
+  var Sqrl = require("squirrelly");
+  Sqrl.autoEscaping(false)
+
+  var fs = require('fs');
+  var dir = './tmp';
+
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+
+  var package = writeFile("./tmp/package.json", `{
+    "name": "tmp",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo Error: no test specified && exit 1"
+    },
+    "author": "",
+    "license": "ISC"
+  }`)
+
+  let indexjsTempl = `
+
+setTimeout(function () {  
+  var fs = require('fs');
+
+{{each(options.funs)}}
+  global.{{@this.name}} = require( __dirname + '/../data/express/{{@this.path}}').fun;
+{{/each}}
+
+  var jsparser = require(__dirname + '/../lib/esprima/esprima.js').parse
+  global.Types = {{typesString}}
 
   Object.prototype.isTyp = function (fields) {
     var keys =  Object.keys(this)
@@ -19,18 +50,16 @@ function runAny(meta) {
     return wrap(this)
   };
 
-  global.Types = {"4":{"names":[{"typ":4,"name":"AppConfig","id":4},{"typ":4,"name":"config","id":14}],"fields":[{"from_typ":4,"synonym":5,"typ":1,"name":"name","typname":"string"},{"from_typ":4,"synonym":6,"typ":2,"name":"frontend","typname":"bool"},{"from_typ":4,"synonym":8,"typ":5,"name":"routings","typname":"Array.<object>"},{"from_typ":4,"synonym":9,"typ":0,"name":"port","typname":"number"}]},"7":{"names":[{"typ":7,"name":"NodejsProject","id":11},{"typ":7,"name":"project","id":16}],"fields":[{"from_typ":7,"synonym":12,"typ":1,"beschreibung":"folder with the name of the projekt","name":"path","typname":"string"}]},"8":{"names":[{"typ":8,"name":"buildable","id":13}],"fields":[{"from_typ":8,"synonym":14,"typ":4,"name":"config","typname":"AppConfig"}]},"9":{"names":[{"typ":9,"name":"runable","id":15}],"fields":[{"from_typ":9,"synonym":16,"typ":7,"name":"project","typname":"NodejsProject"},{"from_typ":9,"synonym":17,"typ":2,"beschreibung":"starts the depugger","name":"debug","typname":"bool"}]},"10":{"names":[{"typ":10,"name":"logable","id":18}],"fields":[{"from_typ":10,"synonym":19,"typ":3,"name":"toLog","typname":"object"}]}}
-  function wrap(object){
-    let typ = undefined;
-    
-    typ = Types[9]
-    if(typ === undefined || object.isTyp(typ.fields)){
-      var params = jsparser(run.toString(),{ tolerant: true }).body[0].params;
+  function wrapOne(object, typId, name) {
+    const typ = Types[typId]
+    let fun = this[name]
+    if(typ != undefined && (object.isTyp(typ.fields) || (typ.fields.length == 1 && typ.fields[0].typname == "object"))){
+      let params = jsparser(fun.toString(),{ tolerant: true }).body[0].params;
       if(params.length == 0){
-        throw new Error("no Parameter Function can#t be attacht to objekt");
+        throw new Error("no Parameter Function can#t be attacht to objekt" + name);
       } else if(params.length == 1){
-        object.run = function () {
-          var returns = run(this)
+        object[name] = function () {
+          var returns = fun(this)
           if (returns === undefined) {
             return this;
           }
@@ -39,151 +68,91 @@ function runAny(meta) {
         if(params.length == 2){
           //todo make it fluit
         }
-        object.run = function () {
-          var returns = run(this[params[0].name], this[params[1].name])
+        object[name] = function () {
+          var paramValues = []
+          for (let i = 0; i < params.length; i++) {
+            const param = params[i];
+            paramValues.push(this[param.name])
+          }
+          var returns = fun.apply(null, paramValues)
           if (returns === undefined) {
             return this;
           }
         }
       }
     }
+    
+  }
 
+
+
+  function wrap(object){
+{{each(options.funs)}}
+    wrapOne(object, {{@this.param}}, "{{@this.name}}")
+{{/each}}
     return object;
+
   }
   
-  eval(fs.readFileSync(__dirname + '/data/express/main.js')+'');
-  global.main = main;
-  eval(fs.readFileSync(__dirname + '/data/express/build.js')+'');
-  global.build = build;
-  eval(fs.readFileSync(__dirname + '/data/express/run.js')+'');
-  global.run = run;
-  eval(fs.readFileSync(__dirname + '/data/express/log.js')+'');
-  global.log = log;
+  debugger;
+  {{called.name}}()
+}, 1000);
+
+  `
+
+  var allFuns = getAllFuns()
+  var allSynonyms = getAllSynonyms()
+  var allFields = getAllFields()
+
+  var synonymsToTyp = Stream(allSynonyms).groupBy("typ")
+
+  var fieldsToTyp = Stream(allFields)
+  .map(function (field) {
+    field.name = findSynonymById(field.synonym)[0].name
+    field.typname = findSynonymForTyp(field.typ)[0].name
+    return field;
+  })
+  .groupBy("from_typ")
+
+  var Types = {}
+  for(var key in fieldsToTyp){
+    Types[key] = {
+      names: synonymsToTyp[key],
+      fields: fieldsToTyp[key]
+    }
+  }
 
 
 
-  ({project: {path: "hallo"}, debug: true}).wrap().expand({"more": "param"}).run()
-  console.log("ende")
+
+  var indexjs = Sqrl.Render(indexjsTempl, {
+    funs: allFuns,
+    typesString: JSON.stringify(Types),
+    called: meta
+  })
+
+
+  
+
+  writeFile("./tmp/index.js", indexjs)
+  console.log(indexjs)
+
+  const { spawn } = require('child_process');
+  const debugg = spawn('rawkit', ['./tmp/index.js']);
+
+  debugg.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+  });
+
+  debugg.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  debugg.on('close', (code) => {
+    console.log(`child process exited with code ${code}`);
+  });
+
 }
-
-
-
-// function runAnyFinal(meta) {
-//   var Sqrl = require("squirrelly");
-//   Sqrl.autoEscaping(false)
-
-//   var fs = require('fs');
-//   var dir = './tmp';
-
-//   if (!fs.existsSync(dir)) {
-//     fs.mkdirSync(dir);
-//   }
-
-//   var package = writeFile("./tmp/package.json", `{
-//     "name": "tmp",
-//     "version": "1.0.0",
-//     "description": "",
-//     "main": "index.js",
-//     "scripts": {
-//       "test": "echo Error: no test specified && exit 1"
-//     },
-//     "author": "",
-//     "license": "ISC"
-//   }`)
-
-//   let indexjsTempl = `
-// setTimeout(function () {  
-//   var fs = require('fs');
-
-//   var jsparse = require(__dirname + '/../lib/esprima/esprima.js')
-
-
-
-//   Object.prototype.isTyp = function (fields) {
-//     var keys =  Object.keys(this)
-//     return fields.every(function(field){return keys.includes(field)})
-//   };
-
-//   Object.prototype.wrap = function () {
-//     return wrap(this)
-//   };
-
-//   global.Types = {{typesString}}
-
-//   function wrap(object){
-//     let typ = undefined;
-// {{each(options.funs)}}
-//     typ = Types[{{@this.param}}]
-//     if(typ === undefined || object.isTyp(typ.fields))
-//       {{@this.name}}()
-// {{/each}}
-//   }
-  
-// {{each(options.funs)}}
-//   eval(fs.readFileSync(__dirname + '/../data/express/{{@this.path}}')+'');
-//   global.{{@this.name}} = {{@this.name}};
-// {{/each}}
-
-
-
-//   ({"hallo":"welt"}).wrap().expand({"more": "param"}).log()
-//   console.log("ende")
-//   // main()
-// }, 5000);
-//   `
-
-//   var allFuns = getAllFuns()
-//   var allSynonyms = getAllSynonyms()
-//   var allFields = getAllFields()
-
-//   var synonymsToTyp = Stream(allSynonyms).groupBy("typ")
-
-//   var fieldsToTyp = Stream(allFields)
-//   .map(function (field) {
-//     field.name = findSynonymById(field.synonym)[0].name
-//     field.typname = findSynonymForTyp(field.typ)[0].name
-//     return field;
-//   })
-//   .groupBy("from_typ")
-
-//   var Types = {}
-//   for(var key in fieldsToTyp){
-//     Types[key] = {
-//       names: synonymsToTyp[key],
-//       fields: fieldsToTyp[key]
-//     }
-//   }
-
-
-
-
-//   var indexjs = Sqrl.Render(indexjsTempl, {
-//     funs: allFuns,
-//     typesString: JSON.stringify(Types)
-//   })
-
-
-  
-
-//   writeFile("./tmp/index.js", indexjs)
-//   console.log(indexjs)
-
-//   const { spawn } = require('child_process');
-//   const debugg = spawn('rawkit', ['./tmp/index.js']);
-
-//   debugg.stdout.on('data', (data) => {
-//     console.log(`stdout: ${data}`);
-//   });
-
-//   debugg.stderr.on('data', (data) => {
-//     console.error(`stderr: ${data}`);
-//   });
-
-//   debugg.on('close', (code) => {
-//     console.log(`child process exited with code ${code}`);
-//   });
-
-// }
 
 // //Load HTTP module
 // const http = require("http");

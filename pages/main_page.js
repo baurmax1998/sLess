@@ -142,11 +142,11 @@ function generateElement(id, meta) {
             $("<a class='w3-round w3-button w3-light-grey w3-tiny' href='#'>").append(
               $('<i class="fa fa-info">')))
           .append(
-            $("<a class='w3-round w3-button w3-light-grey w3-tiny' href='#'>").append(
+            $("<a class='w3-round w3-button w3-light-grey w3-tiny' href='#'>")
+            .on("click", function () {
+              runAny(meta) 
+            }).append(
               $('<i class="fa fa-play">')))
-              .on("click", function () {
-                runAny(meta) 
-              })
           .append(
             $("<a class='w3-round w3-button w3-light-grey w3-tiny' href='#'>").append(
               $('<i class="fa fa-bread-slice">')))

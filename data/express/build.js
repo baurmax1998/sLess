@@ -4,7 +4,7 @@
   * @param {AppConfig} config 
   * @returns {NodejsProject}
 */ 
-function build(config) {
+exports.fun = function build(config) {
   console.log(config.name)
   console.log(config.frontend)
   console.log(config.routings)

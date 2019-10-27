@@ -3,6 +3,6 @@
   * log it
   * @param {object} toLog 
   */ 
-function log(toLog) {
-  
+exports.fun = function log(toLog) {
+  console.log(toLog)
 }
