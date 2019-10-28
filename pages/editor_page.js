@@ -123,8 +123,8 @@ function allowedInner(element) {
 function getFunctionLines(code, script) {
   let ast = jsparser(code);
   for (let i = 0; i < ast.body.length; i++) {
-    let element = ast.body[i];
-    if (element.type === "FunctionDeclaration" && element.id.name === script.name) {
+    let element = ast.body[i].expression.right;
+    if (element.type === "FunctionExpression" && element.id.name === script.name) {
       return getLines(element.body.body);
     }
   }
@@ -245,6 +245,13 @@ function getVars(type) {
   return vars;
 }
 
+function initCreateEvent() {
+  $(".create").unbind( "click" ).on("click", function () {
+    console.log("hallo")
+    initObjectBuilder(this.text, scope)
+  })
+}
+
 function initCalcEvent(){
   $(".calc").unbind( "click" ).on("click", function () {
     console.log("hallo")
@@ -273,9 +280,12 @@ function selectCall(item) {
 }
 
 function selectCreate(item) {
+  setTimeout(initCreateEvent, 100);
   return $("<div>").append(
-    $("<a href='#' class='w3-tag w3-round-xxlarge w3-green' contenteditable='false'>").text(item.original.name)
-      .append($('<i class="fa w3-small" style="padding-left: 3px;">').addClass("fa-external-link-alt"))
+    $("<a href='#' class='w3-tag w3-round-xxlarge w3-green create' contenteditable='false'>")
+      .text(item.original.name)
+      .append($('<i class="fa w3-small" style="padding-left: 3px;">')
+      .addClass("fa-external-link-alt"))
   ).html()
 }
 

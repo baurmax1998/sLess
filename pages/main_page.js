@@ -130,7 +130,6 @@ function generateElement(id, meta) {
             .addClass(color)
             .text(name)
             .on("click", function () {
-              console.log(name)
               $("#main").hide();
               initEditor(name)
             })

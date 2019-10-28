@@ -1,5 +1,12 @@
 function initObjectBuilder(typeSyn, scope) {
   $("#object_builder").show();
+  var modal = document.getElementById('object_builder');
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      $("#object_builder").hide()
+    }
+  }
+
   let typ = findTypForSynonym(typeSyn)[0];
   let fields = findFieldsForTyp(typ.typ)
   let properties = {};
@@ -36,38 +43,3 @@ function initObjectBuilder(typeSyn, scope) {
     }
   });
 }
-
-
-let properties = {
-  make: {
-    type: "string",
-    enum: [
-      "Toyota",
-      "BMW",
-      "Honda",
-      "Ford",
-      "Chevy",
-      "VW"
-    ]
-  },
-  model: {
-    type: "string"
-  },
-  year: {
-    type: "integer",
-    enum: [
-      1995,1996,1997,1998,1999,
-      2000,2001,2002,2003,2004,
-      2005,2006,2007,2008,2009,
-      2010,2011,2012,2013,2014
-    ],
-    default: 2008
-  },
-  safety: {
-    type: "integer",
-    format: "rating",
-    maximum: "5",
-    exclusiveMaximum: false,
-    readonly: false
-  }
-};
