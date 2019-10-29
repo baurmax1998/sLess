@@ -55,8 +55,8 @@ $(document).ready(async function () {
     loadScripts()
   })
 
-  initScriptView();
-  // initEditor("aaVerbrauch");
+  // initScriptView();
+  initEditor("main");
   // initQueryBuilder();
   // initObjectBuilder("number", {});
   // initCalc(["a", "b", "c", "aLongerOne", "zehn"])

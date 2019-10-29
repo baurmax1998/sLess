@@ -5,7 +5,6 @@ let jsparser = esprima.parse;
 async function initEditor(funName) {
   console.log(funName)
   $("#code_editor").show();
-
   var script = findFunByName(funName)[0]
   var params = findFieldsForTyp(script.param)
   let synonyms = getAllSynonyms()
@@ -23,23 +22,13 @@ async function initEditor(funName) {
   $("#editf").on("click", saveCanges);
 
   let code = await readFile(scriptPathConfig + script.path)
-  let lines = getFunctionLines(code, script)
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (line instanceof jQuery) {
-      $("#idContentEditable").append(line)
-    } else {
-      console.error(line)
-    }
-  }
-  $("#idContentEditable").append($("<div contenteditable='true'>"))
-
+  
+  codeToHtml(code, script)
   initCalcEvent()
-
+  initCreateEvent()
 
   var tribute = new Tribute({
-    allowSpaces: true,
+    allowSpaces: false,
     autocompleteMode: true,
     values: values,
     selectTemplate: selectTemplate,
@@ -47,162 +36,10 @@ async function initEditor(funName) {
     lookup: 'name',
     fillAttr: 'name'
   })
-
-  $("#idContentEditable > div").each((i, item) => {
-    tribute.attach(item);
-  })
-
-  $("#idContentEditable > div").keydown(function editorKeydown(e) {
-    let target = $(e.target);
-    if (e.which == 13 && !$(".tribute-container").is(":visible")) {
-      var newRow = $("<div contenteditable='true'>");
-      tribute.attach(newRow);
-      newRow
-        .keydown(editorKeydown)
-        .insertAfter(target)
-      target.next().focus();
-      return false;
-    }
-    if (e.keyCode == 8 && e.target.textContent == "" && $("#idContentEditable").children().length > 1) {
-      var prev = target.prev()
-      target.remove();
-      prev.focus().delay(20).caretToEnd();
-
-    }
-    return true;
-  })
-}
-
-async function saveCanges() {
-  var lines = $("#idContentEditable").children()
-
-  var codeLines = ""
-  for (let i = 0; i < lines.length; i++) {
-    let line = $(lines[i]);
-    let childs = line.children();
-    let codeLine = ""
-    for (let x = 0; x < childs.length; x++) {
-      const child = $(childs[x]);
-      codeLine += " " + child.text()
-    }
-    codeLines += codeLine + "\n";
-  }
-  let newLines = jsparser(codeLines,{ tolerant: true }).body
-  
-  let code = await readFile(scriptPathConfig + scope.active.path)
-  let ast = jsparser(code, {
-    attachComment: true
-  });
-  for (let i = 0; i < ast.body.length; i++) {
-    let element = ast.body[i];
-    if (element.type === "FunctionDeclaration" && element.id.name === scope.active.name) {
-      ast.body[i].body.body = newLines;
-    }
-  }
-  var newCode = escodegen.generate(ast, {
-    format: {
-      quotes: 'double',
-      semicolons: false,
-    },
-    comment: true,
-  })
-  writeFile(scriptPathConfig + scope.active.path, newCode)
-  console.log("Saved")
-}
-
-function allowedInner(element) {
-  if (!["BinaryExpression"
-    , "ConditionalExpression"
-    , "Literal"
-    , "Identifier"
-    , "CallExpression"
-  ].includes(element.type))
-    console.error(element);
-}
-
-function getFunctionLines(code, script) {
-  let ast = jsparser(code);
-  for (let i = 0; i < ast.body.length; i++) {
-    let element = ast.body[i].expression.right;
-    if (element.type === "FunctionExpression" && element.id.name === script.name) {
-      return getLines(element.body.body);
-    }
-  }
-}
-
-function getLines(body) {
-  let lines = [];
-  for (let i = 0; i < body.length; i++) {
-    var element = body[i];
-    var statementLines = write(element);
-    if (Array.isArray(statementLines)) {
-      lines.concat(statementLines)
-    } else {
-      lines.push(statementLines)
-    }
-  }
-  return lines;
+  makeEditable(tribute)
 }
 
 
-function write(element) {
-  let type = element.type;
-  if (type === "ExpressionStatement") {
-    throw new Error("todo")
-    return {
-      name: element.expression.callee.name + "()",
-      arguments: element.expression.arguments
-    }
-  } else if (type === "VariableDeclaration") {
-    throw new Error("todo")
-    let init = element.declarations[0].init;
-    // allowedInner(init);
-    return {
-      name: element.declarations[0].id.name,
-      value: write(init)
-    }
-  } else if (type === "BinaryExpression") {
-    var left = write(element.left)
-    var right = write(element.right)
-    return $('<a href="#" contenteditable="false">')
-    .addClass("calc")
-    .addClass("w3-tag w3-white w3-border-red w3-border w3-round")
-    .text(left.text() + element.operator + right.text())
-  } else if (type === "ConditionalExpression") {
-    throw new Error("todo")
-    let consequent = element.consequent;
-    let alternate = element.alternate;
-    allowedInner(consequent);
-    allowedInner(alternate);
-    return {
-      conditon: write(element.test),
-      consequent: write(consequent),
-      alternate: write(alternate)
-    }
-  } else if (type === "ReturnStatement") {
-    let expressions = write(element.argument);
-    return $("<div contenteditable='true'>")
-      .append($("<span class='returns'>").text("return"))
-      .append(expressions)
-  } else if (type === "Literal") {
-    return $("<span class='value'>").text( element.raw);
-  } else if (type === "Identifier") {
-    return $("<a class='ref' href='#'>").text(element.name) //link
-  } else if (type === "CallExpression") {
-    return {
-      name: element.callee.name + "()",
-      arguments: element.arguments
-    }
-  } else if (type === "IfStatement") {
-    throw new Error("todo")
-    throw new Error("if's are not allowed -> {}less")
-  } else if (type === "FunctionExpression") {
-    throw new Error("todo")
-    throw new Error("Functions are not allowed -> {}less")
-  } else {
-    console.log(element);
-  }
-}
 
 function activeRow() {
   return $("#idContentEditable > div:focus");
@@ -229,36 +66,10 @@ function selectTemplate(item) {
     } else if (item.original.action == "calc") {
       return selectMath()
     }
-
   }
   return "todo"
 }
 
-function getVars(type) {
-  var vars = []
-  for (let i = 0; i < scope.params.length; i++) {
-    const param = scope.params[i];
-    if (type != undefined || param.typ == type) {
-      vars.push(findSynonymById(param.synonym)[0].name)
-    }
-  }
-  return vars;
-}
-
-function initCreateEvent() {
-  $(".create").unbind( "click" ).on("click", function () {
-    console.log("hallo")
-    initObjectBuilder(this.text, scope)
-  })
-}
-
-function initCalcEvent(){
-  $(".calc").unbind( "click" ).on("click", function () {
-    console.log("hallo")
-    var numberVars = getVars(0);
-    initCalc($(this), numberVars)
-  })
-}
 
 function selectMath() {
   setTimeout(initCalcEvent, 100);
@@ -326,8 +137,16 @@ function values(text, cb) {
   posibilitys = addVars(posibilitys, textWithoutFunc);
   posibilitys = addSynonyms(posibilitys)
   posibilitys = addFuns(posibilitys)
+  posibilitys = addMethods(posibilitys, textWithoutFunc)
 
   cb(posibilitys)
+}
+
+function addMethods(posibilitys, textWithoutFunc) {
+  var active = activeRow()
+  console.log(active)
+
+  return posibilitys;
 }
 
 function addStandarts(posibilitys) {

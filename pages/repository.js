@@ -183,8 +183,6 @@ function databaseReadyAndFilledWithDefaults() {
   addTypeWithName("string")
   addTypeWithName("bool")
   addTypeWithName("object")
-
-
 }
 
 function addOrGetSynonym(typ, name) {
