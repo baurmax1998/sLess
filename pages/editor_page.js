@@ -144,7 +144,38 @@ function values(text, cb) {
 
 function addMethods(posibilitys, textWithoutFunc) {
   var active = activeRow()
-  console.log(active)
+  var prevLine = active.prev().contents()
+  var prevCode = ""
+  for (let i = 0; i < prevLine.length; i++) {
+    const elem = $(prevLine[i]);
+    if (elem.hasClass("create")){
+      prevCode += "(" + JSON.stringify( elem.data().json) + ")"
+    } else {
+      prevCode += elem.text()
+    }
+  }
+  if (prevCode == "") return posibilitys;
+  var ast = jsparser(prevCode, { tolerant: true }).body[0]
+  if(ast.typ == "VariableDeclaration"){
+    var init = ast.declarations[0].init
+  }
+  if(ast.type == "ExpressionStatement"){
+    var expression = ast.expression
+    if (expression.type == "ObjectExpression"){
+      var props = []
+      for (let i = 0; i < expression.properties.length; i++) {
+        const prop = expression.properties[i];
+        props.push(prop.key.value)
+      }
+      var types = findTypesByFieldSynonyms(props)
+      for (let i = 0; i < types.length; i++) {
+        const typFields = types[i];
+        var typ = typFields[0].from_typ
+        var methods = findMethodsForType(typ)
+        console.log(typ)
+      }
+    }
+  }
 
   return posibilitys;
 }

@@ -84,10 +84,19 @@ function fun(param, returns, name, beschreibung, path) {
   }
 }
 
+function findSynonymTypForFieldsSynonym(fields) {
+  return findSynonymTypForFields(fields, "synonym")
+}
 
-function findSynonymTypForFields(fields) {
-  let typesFromFields = Stream(fields)
-    .map("typ")
+function findSynonymTypForFieldsTyp(fields) {
+  return findSynonymTypForFields(fields, "typ")
+  
+}
+
+
+function findSynonymTypForFields(fields, attr) {
+  let attrFromFields = Stream(fields)
+    .map(attr)
     .toArray();
   let types = Stream(getAll(tables.field))
     .groupBy('from_typ');
@@ -97,10 +106,10 @@ function findSynonymTypForFields(fields) {
     let wrongField = false;
     for (let i = 0; i < fields.length; i++) {
       const field = fields[i];
-      wrongField = !typesFromFields.includes(field.typ) || wrongField;
+      wrongField = !attrFromFields.includes(field[attr]) || wrongField;
     }
     if (!wrongField) {
-      synonym_typs.push(fieds)
+      synonym_typs.push(fields)
     }
   }
   return synonym_typs;
@@ -124,6 +133,19 @@ function findSynonymById(id) {
     .value();
 }
 
+function findTypesByFieldSynonyms(params) {
+  var fields = []
+  for (let i = 0; i < params.length; i++) {
+    const syno = params[i];
+    var typ = findTypForSynonym(syno)[0]
+    typ["synonym"] = typ.id
+    fields.push(typ)
+  }
+  var types = findSynonymTypForFieldsSynonym(fields)
+  console.log(types)
+  return types;
+}
+
 function findFieldsForTyp(type_id) {
   return db.get(tables.field)
     .filter({ from_typ: type_id })
@@ -145,8 +167,8 @@ function findTypForSynonymOrCreate(synonym) {
 }
 
 function findSynonymTypForTyp(typ_id) {
-  let findFieldsForTyp = findFieldsForTyp(typ_id)
-  return findSynonymTypForFields(findFieldsForTyp);
+  let fieldsForTyp = findFieldsForTyp(typ_id)
+  return findSynonymTypForFields(fieldsForTyp);
 
 }
 
