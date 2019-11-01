@@ -22,7 +22,7 @@ async function initEditor(funName) {
   $("#editf").on("click", saveCanges);
 
   let code = await readFile(scriptPathConfig + script.path)
-  
+
   codeToHtml(code, script)
   initCalcEvent()
   initCreateEvent()
@@ -65,9 +65,25 @@ function selectTemplate(item) {
       return item.original.name;
     } else if (item.original.action == "calc") {
       return selectMath()
+    } else if (item.original.action == ".call"){
+      return selectFloatCall(item)
     }
+    console.log(item)
   }
   return "todo"
+}
+
+function selectFloatCall(item) {
+  console.log(".call")
+
+
+  return $("<div>").append(
+    $('<a href="#" contenteditable="false">')
+    .addClass("method")
+    .text(item.original.name)
+  ).append(
+    $("<a href='#' class='w3-tag w3-round-xxlarge w3-green create' contenteditable='false'>").text("()")
+  ).html()
 }
 
 
@@ -96,7 +112,7 @@ function selectCreate(item) {
     $("<a href='#' class='w3-tag w3-round-xxlarge w3-green create' contenteditable='false'>")
       .text(item.original.name)
       .append($('<i class="fa w3-small" style="padding-left: 3px;">')
-      .addClass("fa-external-link-alt"))
+        .addClass("fa-external-link-alt"))
   ).html()
 }
 
@@ -133,12 +149,11 @@ function selectVar(item, active) {
 function values(text, cb) {
   var textWithoutFunc = text.split(".")[0]
   var posibilitys = [];
+  posibilitys = addMethods(posibilitys, textWithoutFunc)
+  posibilitys = addSynonyms(posibilitys)
   posibilitys = addStandarts(posibilitys)
   posibilitys = addVars(posibilitys, textWithoutFunc);
-  posibilitys = addSynonyms(posibilitys)
   posibilitys = addFuns(posibilitys)
-  posibilitys = addMethods(posibilitys, textWithoutFunc)
-
   cb(posibilitys)
 }
 
@@ -148,20 +163,20 @@ function addMethods(posibilitys, textWithoutFunc) {
   var prevCode = ""
   for (let i = 0; i < prevLine.length; i++) {
     const elem = $(prevLine[i]);
-    if (elem.hasClass("create")){
-      prevCode += "(" + JSON.stringify( elem.data().json) + ")"
+    if (elem.hasClass("create")) {
+      prevCode += "(" + JSON.stringify(elem.data().json) + ")"
     } else {
       prevCode += elem.text()
     }
   }
   if (prevCode == "") return posibilitys;
   var ast = jsparser(prevCode, { tolerant: true }).body[0]
-  if(ast.typ == "VariableDeclaration"){
+  if (ast.typ == "VariableDeclaration") {
     var init = ast.declarations[0].init
   }
-  if(ast.type == "ExpressionStatement"){
+  if (ast.type == "ExpressionStatement") {
     var expression = ast.expression
-    if (expression.type == "ObjectExpression"){
+    if (expression.type == "ObjectExpression") {
       var props = []
       for (let i = 0; i < expression.properties.length; i++) {
         const prop = expression.properties[i];
@@ -172,7 +187,23 @@ function addMethods(posibilitys, textWithoutFunc) {
         const typFields = types[i];
         var typ = typFields[0].from_typ
         var methods = findMethodsForType(typ)
-        console.log(typ)
+        for (let j = 0; j < methods.length; j++) {
+          const method = methods[j];
+          posibilitys.push({
+            name: "." + method.name,
+            info: ".call",
+            action: ".call"
+          })
+        }
+        for (let j = 0; j < typFields.length; j++) {
+          const field = typFields[j];
+          var fieldSynonym = findSynonymById(field.synonym)[0]
+          posibilitys.push({
+            name: "." + fieldSynonym.name ,
+            info: ".get",
+            action: ".get"
+          })
+        }
       }
     }
   }

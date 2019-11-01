@@ -90,7 +90,7 @@ function findSynonymTypForFieldsSynonym(fields) {
 
 function findSynonymTypForFieldsTyp(fields) {
   return findSynonymTypForFields(fields, "typ")
-  
+
 }
 
 
@@ -142,7 +142,6 @@ function findTypesByFieldSynonyms(params) {
     fields.push(typ)
   }
   var types = findSynonymTypForFieldsSynonym(fields)
-  console.log(types)
   return types;
 }
 
@@ -160,7 +159,7 @@ function findTypForSynonym(synonym) {
 
 function findTypForSynonymOrCreate(synonym) {
   var synonymObject = findTypForSynonym(synonym)[0];
-  if(synonymObject == undefined){
+  if (synonymObject == undefined) {
     addTypeWithName(synonym)
   }
   return findTypForSynonym(synonym)
@@ -168,16 +167,18 @@ function findTypForSynonymOrCreate(synonym) {
 
 function findSynonymTypForTyp(typ_id) {
   let fieldsForTyp = findFieldsForTyp(typ_id)
-  return findSynonymTypForFields(fieldsForTyp);
+  return findSynonymTypForFields(fieldsForTyp, "");
 
 }
 
 function findMethodsForType(type_id) {
-  let synonym_typs = findSynonymTypForTyp(type_id)
-  let allFunktions = getAll(tables.fun);
-  return Stream(allFunktions).filter(function (fun) {
-    return synonym_typs.includes(fun.param);
-  })
+  return Stream(getAll(tables.fun)).filter(function (fun) {
+    var fields = Stream(findFieldsForTyp(fun.param))
+      .map("typ")
+      .toArray();
+    fields.push(fun.param)
+    return fields.includes(type_id)
+  }).toArray()
 }
 
 function findConstructorForType(type_id) {
@@ -283,9 +284,9 @@ async function loadScript(fileName) {
     todos.push("Das Script: " + fileName + " konnte nicht mit JSDoc gelesen werden!!")
     return;
   }
-  if(doc.kind == "typedef"){
+  if (doc.kind == "typedef") {
     let typ = addTypeWithName(doc.name);
-    let props = doc.properties?doc.properties: [];
+    let props = doc.properties ? doc.properties : [];
     for (let i = 0; i < props.length; i++) {
       const param = props[i];
       let typOfParam = findTypForSynonymOrCreate(param.type.names[0])[0].typ;
@@ -308,9 +309,9 @@ async function loadScript(fileName) {
       add(tables.field, field(paramsTyp, synonym, typOfParam, param.description))
     }
     var returns = meta.returns;
-    if (returns) 
-     returns = findTypForSynonym(returns[0].type.names[0])[0].typ;
+    if (returns)
+      returns = findTypForSynonym(returns[0].type.names[0])[0].typ;
     add(tables.fun, fun(paramsTyp, returns, meta.name, meta.description, fileName))
   }
-  
+
 }
