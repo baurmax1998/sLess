@@ -65,7 +65,7 @@ function selectTemplate(item) {
       return item.original.name;
     } else if (item.original.action == "calc") {
       return selectMath()
-    } else if (item.original.action == ".call"){
+    } else if (item.original.action == ".call") {
       return selectFloatCall(item)
     }
     console.log(item)
@@ -74,16 +74,18 @@ function selectTemplate(item) {
 }
 
 function selectFloatCall(item) {
-  console.log(".call")
-
-
-  return $("<div>").append(
-    $('<a href="#" contenteditable="false">')
-    .addClass("method")
-    .text(item.original.name)
-  ).append(
-    $("<a href='#' class='w3-tag w3-round-xxlarge w3-green create' contenteditable='false'>").text("()")
-  ).html()
+  return $("<div>")
+    .append(
+      $('<i class="fa w3-small" style="padding-right: 3px;">')
+      .addClass("fa-arrow-circle-right")
+      .addClass("floatPoint")
+    ).append(
+      $('<a href="#" contenteditable="false">')
+        .addClass("method")
+        .text(item.original.name.substring(1))
+    ).append(
+      $("<a href='#' class='w3-tag w3-round-xxlarge w3-green create' contenteditable='false'>").text("()")
+    ).html()
 }
 
 
@@ -159,17 +161,10 @@ function values(text, cb) {
 
 function addMethods(posibilitys, textWithoutFunc) {
   var active = activeRow()
-  var prevLine = active.prev().contents()
-  var prevCode = ""
-  for (let i = 0; i < prevLine.length; i++) {
-    const elem = $(prevLine[i]);
-    if (elem.hasClass("create")) {
-      prevCode += "(" + JSON.stringify(elem.data().json) + ")"
-    } else {
-      prevCode += elem.text()
-    }
-  }
+  var lineElem = active.prev()
+  var prevCode = htmlLineToCode(lineElem)
   if (prevCode == "") return posibilitys;
+  if (prevCode.startsWith(".")) prevCode = prevCode.substring(1)
   var ast = jsparser(prevCode, { tolerant: true }).body[0]
   if (ast.typ == "VariableDeclaration") {
     var init = ast.declarations[0].init
@@ -186,29 +181,40 @@ function addMethods(posibilitys, textWithoutFunc) {
       for (let i = 0; i < types.length; i++) {
         const typFields = types[i];
         var typ = typFields[0].from_typ
-        var methods = findMethodsForType(typ)
-        for (let j = 0; j < methods.length; j++) {
-          const method = methods[j];
-          posibilitys.push({
-            name: "." + method.name,
-            info: ".call",
-            action: ".call"
-          })
-        }
-        for (let j = 0; j < typFields.length; j++) {
-          const field = typFields[j];
-          var fieldSynonym = findSynonymById(field.synonym)[0]
-          posibilitys.push({
-            name: "." + fieldSynonym.name ,
-            info: ".get",
-            action: ".get"
-          })
-        }
+        posibilitiesForTyp(typ, posibilitys)
       }
+    } else if (expression.type == "CallExpression") {
+      var fun = findFunByName(expression.callee.name)[0]
+      var typ = fun.returns
+      posibilitiesForTyp(typ, posibilitys)
     }
   }
 
   return posibilitys;
+}
+
+
+
+function posibilitiesForTyp(typ, posibilitys) {
+  var methods = findMethodsForType(typ)
+  for (let j = 0; j < methods.length; j++) {
+    const method = methods[j];
+    posibilitys.push({
+      name: "." + method.name,
+      info: ".call",
+      action: ".call"
+    })
+  }
+  var typFields = findFieldsForTyp(typ)
+  for (let j = 0; j < typFields.length; j++) {
+    const field = typFields[j];
+    var fieldSynonym = findSynonymById(field.synonym)[0]
+    posibilitys.push({
+      name: "." + fieldSynonym.name,
+      info: ".get",
+      action: ".get"
+    })
+  }
 }
 
 function addStandarts(posibilitys) {
