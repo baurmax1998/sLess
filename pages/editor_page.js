@@ -77,8 +77,8 @@ function selectFloatCall(item) {
   return $("<div>")
     .append(
       $('<i class="fa w3-small" style="padding-right: 3px;">')
-      .addClass("fa-arrow-circle-right")
-      .addClass("floatPoint")
+        .addClass("fa-arrow-circle-right")
+        .addClass("floatPoint")
     ).append(
       $('<a href="#" contenteditable="false">')
         .addClass("method")
@@ -110,9 +110,14 @@ function selectCall(item) {
 
 function selectCreate(item) {
   setTimeout(initCreateEvent, 100);
+  return getCreate(item.original.name, {})
+}
+
+function getCreate(typ, value) {
   return $("<div>").append(
     $("<a href='#' class='w3-tag w3-round-xxlarge w3-green create' contenteditable='false'>")
-      .text(item.original.name)
+      .attr("data-json", JSON.stringify(value))
+      .text(typ)
       .append($('<i class="fa w3-small" style="padding-left: 3px;">')
         .addClass("fa-external-link-alt"))
   ).html()

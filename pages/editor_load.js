@@ -16,9 +16,9 @@ function codeToHtml(code, script) {
 function getFunctionLines(code, script) {
   let ast = jsparser(code);
   for (let i = 0; i < ast.body.length; i++) {
-    let element = ast.body[i].expression.right;
-    if (element.type === "FunctionExpression" && element.id.name === script.name) {
-      return getLines(element.body.body);
+    let element = ast.body[i];
+    if (isExportFun(element)) {
+      return getLines(element.expression.right.body.body);
     }
   }
 }
@@ -28,11 +28,7 @@ function getLines(body) {
   for (let i = 0; i < body.length; i++) {
     var element = body[i];
     var statementLines = write(element);
-    if (Array.isArray(statementLines)) {
-      lines.concat(statementLines)
-    } else {
-      lines.push(statementLines)
-    }
+    lines = extendArray(statementLines, lines)
   }
   return lines;
 }
@@ -42,11 +38,8 @@ function getLines(body) {
 function write(element) {
   let type = element.type;
   if (type === "ExpressionStatement") {
-    throw new Error("todo")
-    return {
-      name: element.expression.callee.name + "()",
-      arguments: element.expression.arguments
-    }
+    var expressionLines = write(element.expression)
+    return expressionLines;
   } else if (type === "VariableDeclaration") {
     throw new Error("todo")
     let init = element.declarations[0].init;
@@ -83,19 +76,41 @@ function write(element) {
   } else if (type === "Identifier") {
     return $("<a class='ref' href='#'>").text(element.name) //link
   } else if (type === "CallExpression") {
+    var callee = write(element.callee)
     return {
-      name: element.callee.name + "()",
+      name: callee.member + "()",
       arguments: element.arguments
     }
+  } else if (type === "MemberExpression") {
+    var object = write(element.object)
+    return {
+      object: object,
+      member: element.property.name
+    }
+  } else if (type === "ObjectExpression") {
+    var object = {}
+    for (let i = 0; i < element.properties.length; i++) {
+      const prop = element.properties[i];
+      object[prop.key.value] = prop.value.value
+    }
+    var typ = findSynonymTypForFieldsSynonymOnObject(object)
+    return getCreate(findSynonymForTyp(typ[0][0].from_typ)[0].name, object)
   } else if (type === "IfStatement") {
-    throw new Error("todo")
     throw new Error("if's are not allowed -> {}less")
   } else if (type === "FunctionExpression") {
-    throw new Error("todo")
     throw new Error("Functions are not allowed -> {}less")
   } else {
     console.log(element);
   }
+}
+
+function extendArray(object, array) {
+  if (Array.isArray(object)) {
+    array.concat(object)
+  } else {
+    array.push(object)
+  }
+  return array;
 }
 
 

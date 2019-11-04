@@ -84,6 +84,21 @@ function fun(param, returns, name, beschreibung, path) {
   }
 }
 
+function findSynonymTypForFieldsSynonymOnObject(object){
+  var fields = []
+  for (const key in object) {
+    if (object.hasOwnProperty(key)) {
+      var typ = findTypForSynonym(key)[0]
+      fields.push({
+        synonym: typ.id
+      })
+    }
+  }
+
+  return findSynonymTypForFieldsSynonym(fields)
+}
+
+
 function findSynonymTypForFieldsSynonym(fields) {
   return findSynonymTypForFields(fields, "synonym")
 }
