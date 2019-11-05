@@ -5,9 +5,9 @@
   */
 exports.fun = function main() {
     ({
-        "name": "",
-        "frontend": false,
+        "name": "test",
+        "frontend": true,
         "routings": null,
-        "port": 0
+        "port": 8080
     }.build(undefined).run(undefined))
 }

@@ -77,10 +77,12 @@ function write(element) {
     return $("<a class='ref' href='#'>").text(element.name) //link
   } else if (type === "CallExpression") {
     var callee = write(element.callee)
-    return {
-      name: callee.member + "()",
-      arguments: element.arguments
-    }
+    // console.log("todo:" + element.arguments)
+    var lines = []
+    lines = extendArray(callee.object, lines)
+    var call = $("<div contenteditable='true'>").html(getFloatCall(callee.member).html())
+    lines = extendArray(call, lines)
+    return lines
   } else if (type === "MemberExpression") {
     var object = write(element.object)
     return {
@@ -94,7 +96,10 @@ function write(element) {
       object[prop.key.value] = prop.value.value
     }
     var typ = findSynonymTypForFieldsSynonymOnObject(object)
-    return getCreate(findSynonymForTyp(typ[0][0].from_typ)[0].name, object)
+    return $("<div contenteditable='true'>")
+      .append(
+        getCreate(findSynonymForTyp(typ[0][0].from_typ)[0].name, object)
+      );
   } else if (type === "IfStatement") {
     throw new Error("if's are not allowed -> {}less")
   } else if (type === "FunctionExpression") {
@@ -106,7 +111,7 @@ function write(element) {
 
 function extendArray(object, array) {
   if (Array.isArray(object)) {
-    array.concat(object)
+    array = array.concat(object)
   } else {
     array.push(object)
   }

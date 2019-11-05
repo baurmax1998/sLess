@@ -74,7 +74,13 @@ function selectTemplate(item) {
 }
 
 function selectFloatCall(item) {
-  return $("<div>")
+  return $("<div>").append(
+      getFloatCall(item.original.name.substring(1)).children()
+    ).html()
+}
+
+function getFloatCall(name) {
+  return $("<span contenteditable='false'>")
     .append(
       $('<i class="fa w3-small" style="padding-right: 3px;">')
         .addClass("fa-arrow-circle-right")
@@ -82,10 +88,11 @@ function selectFloatCall(item) {
     ).append(
       $('<a href="#" contenteditable="false">')
         .addClass("method")
-        .text(item.original.name.substring(1))
+        .text(name)
     ).append(
-      $("<a href='#' class='w3-tag w3-round-xxlarge w3-green create' contenteditable='false'>").text("()")
-    ).html()
+      $("<a href='#' class='w3-tag w3-round-xxlarge w3-green create' contenteditable='false'>")
+        .text("()")
+    );
 }
 
 
@@ -110,17 +117,16 @@ function selectCall(item) {
 
 function selectCreate(item) {
   setTimeout(initCreateEvent, 100);
-  return getCreate(item.original.name, {})
+  return $("<div>").append(getCreate(item.original.name, {})).html()
 }
 
 function getCreate(typ, value) {
-  return $("<div>").append(
-    $("<a href='#' class='w3-tag w3-round-xxlarge w3-green create' contenteditable='false'>")
+  return $("<a href='#' class='w3-tag w3-round-xxlarge w3-green create' contenteditable='false'>")
       .attr("data-json", JSON.stringify(value))
       .text(typ)
       .append($('<i class="fa w3-small" style="padding-left: 3px;">')
         .addClass("fa-external-link-alt"))
-  ).html()
+  
 }
 
 function selectVar(item, active) {
