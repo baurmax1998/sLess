@@ -43,6 +43,10 @@ setTimeout(function () {
     return wrap(this)
   };
 
+  function _(ob){
+    return wrap(ob)
+  }
+
   Object.prototype.expand = function (update) {
     for(var key in update){
       this[key] = update[key];
@@ -53,7 +57,12 @@ setTimeout(function () {
   function wrapOne(object, typId, name) {
     const typ = Types[typId]
     let fun = this[name]
-    if(typ != undefined && (object.isTyp(typ.fields) || (typ.fields.length == 1 && typ.fields[0].typname == "object"))){
+    if(typ != undefined 
+      && (
+        object.isTyp(typ.fields) 
+        || (typ.fields.length == 1 
+          && (typ.fields[0].typname == "object"
+          ||object.isTyp(Types[typ.fields[0].typ].fields))))){
       let params = jsparser(fun.toString(),{ tolerant: true }).body[0].params;
       if(params.length == 0){
         throw new Error("no Parameter Function can#t be attacht to objekt" + name);

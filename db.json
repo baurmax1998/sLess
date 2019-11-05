@@ -29,9 +29,6 @@
     },
     {
       "id": 9
-    },
-    {
-      "id": 10
     }
   ],
   "synonym": [
@@ -87,53 +84,43 @@
     },
     {
       "typ": 6,
-      "name": "mainable",
-      "id": 10
-    },
-    {
-      "typ": 7,
       "name": "NodejsProject",
-      "id": 11
+      "id": 10
     },
     {
       "typ": 1,
       "name": "path",
-      "id": 12
+      "id": 11
     },
     {
-      "typ": 8,
+      "typ": 7,
       "name": "buildable",
-      "id": 13
+      "id": 12
     },
     {
       "typ": 4,
       "name": "config",
+      "id": 13
+    },
+    {
+      "typ": 8,
+      "name": "runable",
       "id": 14
     },
     {
-      "typ": 9,
-      "name": "runable",
-      "id": 15
-    },
-    {
-      "typ": 7,
+      "typ": 6,
       "name": "project",
-      "id": 16
+      "id": 15
     },
     {
       "typ": 2,
       "name": "debug",
+      "id": 16
+    },
+    {
+      "typ": 9,
+      "name": "mainable",
       "id": 17
-    },
-    {
-      "typ": 10,
-      "name": "logable",
-      "id": 18
-    },
-    {
-      "typ": 3,
-      "name": "toLog",
-      "id": 19
     }
   ],
   "synonym_typ": [],
@@ -159,58 +146,47 @@
       "typ": 0
     },
     {
-      "from_typ": 7,
-      "synonym": 12,
+      "from_typ": 6,
+      "synonym": 11,
       "typ": 1,
       "beschreibung": "folder with the name of the projekt"
     },
     {
-      "from_typ": 8,
-      "synonym": 14,
+      "from_typ": 7,
+      "synonym": 13,
       "typ": 4
     },
     {
-      "from_typ": 9,
-      "synonym": 16,
-      "typ": 7
+      "from_typ": 8,
+      "synonym": 15,
+      "typ": 6
     },
     {
-      "from_typ": 9,
-      "synonym": 17,
+      "from_typ": 8,
+      "synonym": 16,
       "typ": 2,
       "beschreibung": "starts the depugger"
-    },
-    {
-      "from_typ": 10,
-      "synonym": 19,
-      "typ": 3
     }
   ],
   "fun": [
     {
-      "param": 6,
-      "name": "main",
-      "beschreibung": "startpoint",
-      "path": "main.js"
-    },
-    {
-      "param": 8,
-      "returns": 7,
+      "param": 7,
+      "returns": 6,
       "name": "build",
       "beschreibung": "build or extends a node.js projekt for an express app config",
       "path": "build.js"
     },
     {
-      "param": 9,
+      "param": 8,
       "name": "run",
       "beschreibung": "runs an node.js project",
       "path": "run.js"
     },
     {
-      "param": 10,
-      "name": "log",
-      "beschreibung": "log it",
-      "path": "log.js"
+      "param": 9,
+      "name": "main",
+      "beschreibung": "startpoint\nconsole.log(\"main got runned!!\")\n    var res = ({ project: { path: \"hallo\" }, debug: true }).wrap().run()",
+      "path": "main.js"
     }
   ],
   "count": 0

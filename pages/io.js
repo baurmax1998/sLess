@@ -40,7 +40,9 @@ function parseDoc(aPath) {
     parser(aPath, function (err, docs) {
       handleError(err);
       for (let doc of docs) {
-        if (doc.meta != undefined && doc.meta.filename.split(".")[0] == doc.name) {
+        var name = doc.meta.filename.split(".")[0]
+        if (doc.meta != undefined && (name == doc.name || "fun" == doc.name)) {
+          doc.name = name;
           resolve(doc);
           return;
         }

@@ -312,7 +312,7 @@ async function loadScript(fileName) {
     var meta = {
       name: doc.name,
       description: doc.description,
-      params: doc.params,
+      params: doc.params ? doc.params: [],
       returns: doc.returns,
       path: doc.meta.path + "/" + doc.meta.filename,
     };

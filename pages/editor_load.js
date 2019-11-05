@@ -76,13 +76,22 @@ function write(element) {
   } else if (type === "Identifier") {
     return $("<a class='ref' href='#'>").text(element.name) //link
   } else if (type === "CallExpression") {
-    var callee = write(element.callee)
-    // console.log("todo:" + element.arguments)
-    var lines = []
-    lines = extendArray(callee.object, lines)
-    var call = $("<div contenteditable='true'>").html(getFloatCall(callee.member).html())
-    lines = extendArray(call, lines)
-    return lines
+    if (element.callee.type == "Identifier") {
+      if(element.callee.name == "_"){
+        return write(element.arguments[0])
+      } else{
+        console.log("todo: normal fun()")
+      }
+    } else {
+      var callee = write(element.callee)
+      // console.log("todo:" + element.arguments)
+      var lines = []
+      lines = extendArray(callee.object, lines)
+      var call = $("<div contenteditable='true'>").html(getFloatCall(callee.member).html())
+      lines = extendArray(call, lines)
+
+      return lines
+    }
   } else if (type === "MemberExpression") {
     var object = write(element.object)
     return {

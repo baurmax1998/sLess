@@ -55,8 +55,12 @@ function htmlLineToCode(lineElem) {
       lineCode += "."
     }
     if (elem.hasClass("create")) {
-      var json = JSON.stringify(elem.data().json)
-      lineCode += "(" + json + ")"
+      if (elem.text() == "()") {
+        lineCode += "()"
+      } else {
+        var json = JSON.stringify(elem.data().json)
+        lineCode += "_(" + json + ")"
+      }
     } else {
       lineCode += elem.text()
     }
