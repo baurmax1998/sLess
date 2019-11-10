@@ -9,4 +9,7 @@ exports.fun = function build(config) {
   console.log(config.frontend)
   console.log(config.routings)
   console.log(config.port)
+  return {
+    path: "temp"
+  }
 }

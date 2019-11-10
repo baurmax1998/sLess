@@ -43,7 +43,7 @@ setTimeout(function () {
     return wrap(this)
   };
 
-  function _(ob){
+  global._ = function(ob){
     return wrap(ob)
   }
 
@@ -71,6 +71,8 @@ setTimeout(function () {
           var returns = fun(this)
           if (returns === undefined) {
             return this;
+          } else {
+            return _(returns)
           }
         }   
       } else {
@@ -86,6 +88,8 @@ setTimeout(function () {
           var returns = fun.apply(null, paramValues)
           if (returns === undefined) {
             return this;
+          } else {
+            return _(returns)
           }
         }
       }

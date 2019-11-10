@@ -142,10 +142,10 @@ function generateElement(id, meta) {
               $('<i class="fa fa-info">')))
           .append(
             $("<a class='w3-round w3-button w3-light-grey w3-tiny' href='#'>")
-            .on("click", function () {
-              runAny(meta) 
-            }).append(
-              $('<i class="fa fa-play">')))
+              .on("click", function () {
+                runAny(meta)
+              }).append(
+                $('<i class="fa fa-play">')))
           .append(
             $("<a class='w3-round w3-button w3-light-grey w3-tiny' href='#'>").append(
               $('<i class="fa fa-bread-slice">')))
@@ -232,11 +232,16 @@ function getScriptParams(params) {
   for (let i = 0; i < params.length; i++) {
     const param = params[i];
     let paramName = findSynonymById(param.synonym)[0];
+    var isArray = param.typ < 0
+    if (isArray) {
+      param.typ = param.typ * -1
+    }
     let paramTyp = findSynonymForTyp(param.typ)[0]
     paramsElement.append(
       $("<span class='param'>").attr("title", param.beschreibung)
         .append($("<span>").text(paramName.name))
-        .append($("<a href='#' class='w3-tag w3-round w3-green'>").text(paramTyp.name))
+        .append($("<a href='#' class='w3-tag w3-round w3-green'>")
+          .text(paramTyp.name + (isArray ? "[]" : "")))
     )
   }
   return paramsElement;
@@ -247,5 +252,5 @@ function getScriptReturn(returns) {
     return $("<p>")
       .append(
         $("<a href='#' class='w3-tag w3-round'>")
-          .text(returns.name))
+          .text(returns.name + (returns.typ < 0 ? "[]": "")))
 }

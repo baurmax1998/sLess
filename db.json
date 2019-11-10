@@ -29,164 +29,1865 @@
     },
     {
       "id": 9
+    },
+    {
+      "id": 10
+    },
+    {
+      "id": 11
+    },
+    {
+      "id": 12
+    },
+    {
+      "id": 13
+    },
+    {
+      "id": 14
+    },
+    {
+      "id": 15
+    },
+    {
+      "id": 16
+    },
+    {
+      "id": 17
+    },
+    {
+      "id": 18
+    },
+    {
+      "id": 19
+    },
+    {
+      "id": 20
+    },
+    {
+      "id": 21
+    },
+    {
+      "id": 22
+    },
+    {
+      "id": 23
+    },
+    {
+      "id": 24
+    },
+    {
+      "id": 25
+    },
+    {
+      "id": 26
+    },
+    {
+      "id": 27
+    },
+    {
+      "id": 28
+    },
+    {
+      "id": 29
+    },
+    {
+      "id": 30
+    },
+    {
+      "id": 31
+    },
+    {
+      "id": 32
+    },
+    {
+      "id": 33
+    },
+    {
+      "id": 34
+    },
+    {
+      "id": 35
+    },
+    {
+      "id": 36
+    },
+    {
+      "id": 37
+    },
+    {
+      "id": 38
+    },
+    {
+      "id": 39
+    },
+    {
+      "id": 40
+    },
+    {
+      "id": 41
+    },
+    {
+      "id": 42
+    },
+    {
+      "id": 43
+    },
+    {
+      "id": 44
+    },
+    {
+      "id": 45
+    },
+    {
+      "id": 46
+    },
+    {
+      "id": 47
+    },
+    {
+      "id": 48
+    },
+    {
+      "id": 49
+    },
+    {
+      "id": 50
+    },
+    {
+      "id": 51
+    },
+    {
+      "id": 52
+    },
+    {
+      "id": 53
+    },
+    {
+      "id": 54
+    },
+    {
+      "id": 55
+    },
+    {
+      "id": 56
+    },
+    {
+      "id": 57
+    },
+    {
+      "id": 58
+    },
+    {
+      "id": 59
+    },
+    {
+      "id": 60
+    },
+    {
+      "id": 61
+    },
+    {
+      "id": 62
+    },
+    {
+      "id": 63
+    },
+    {
+      "id": 64
+    },
+    {
+      "id": 65
+    },
+    {
+      "id": 66
+    },
+    {
+      "id": 67
+    },
+    {
+      "id": 68
+    },
+    {
+      "id": 69
+    },
+    {
+      "id": 70
+    },
+    {
+      "id": 71
+    },
+    {
+      "id": 72
+    },
+    {
+      "id": 73
+    },
+    {
+      "id": 74
+    },
+    {
+      "id": 75
+    },
+    {
+      "id": 76
+    },
+    {
+      "id": 77
+    },
+    {
+      "id": 78
+    },
+    {
+      "id": 79
+    },
+    {
+      "id": 80
+    },
+    {
+      "id": 81
+    },
+    {
+      "id": 82
+    },
+    {
+      "id": 83
+    },
+    {
+      "id": 84
+    },
+    {
+      "id": 85
+    },
+    {
+      "id": 86
+    },
+    {
+      "id": 87
     }
   ],
   "synonym": [
     {
       "typ": 0,
-      "name": "number",
+      "name": "null",
       "id": 0
     },
     {
       "typ": 1,
-      "name": "string",
+      "name": "number",
       "id": 1
     },
     {
-      "typ": 2,
-      "name": "bool",
+      "typ": -2,
+      "name": "string",
       "id": 2
     },
     {
       "typ": 3,
-      "name": "object",
+      "name": "bool",
       "id": 3
     },
     {
       "typ": 4,
-      "name": "AppConfig",
+      "name": "object",
       "id": 4
     },
     {
-      "typ": 1,
-      "name": "name",
+      "typ": -5,
+      "name": "$elem",
       "id": 5
     },
     {
-      "typ": 2,
-      "name": "frontend",
+      "typ": 6,
+      "name": "ast_elem",
       "id": 6
     },
     {
-      "typ": 5,
-      "name": "Array.<object>",
+      "typ": 2,
+      "name": "type",
       "id": 7
     },
     {
-      "typ": 5,
-      "name": "routings",
+      "typ": 7,
+      "name": "callback",
       "id": 8
     },
     {
-      "typ": 0,
-      "name": "port",
+      "typ": 8,
+      "name": "field",
       "id": 9
     },
     {
-      "typ": 6,
-      "name": "NodejsProject",
+      "typ": 1,
+      "name": "from_typ",
       "id": 10
     },
     {
       "typ": 1,
-      "name": "path",
+      "name": "synonym",
       "id": 11
     },
     {
-      "typ": 7,
-      "name": "buildable",
+      "typ": 1,
+      "name": "typ",
       "id": 12
     },
     {
-      "typ": 4,
-      "name": "config",
+      "typ": 2,
+      "name": "beschreibung",
       "id": 13
     },
     {
-      "typ": 8,
-      "name": "runable",
+      "typ": -9,
+      "name": "fun",
       "id": 14
     },
     {
-      "typ": 6,
-      "name": "project",
+      "typ": 1,
+      "name": "param",
       "id": 15
     },
     {
-      "typ": 2,
-      "name": "debug",
+      "typ": 1,
+      "name": "returns",
       "id": 16
     },
     {
-      "typ": 9,
-      "name": "mainable",
+      "typ": 2,
+      "name": "name",
       "id": 17
+    },
+    {
+      "typ": 2,
+      "name": "path",
+      "id": 18
+    },
+    {
+      "typ": 10,
+      "name": "posibility",
+      "id": 19
+    },
+    {
+      "typ": 2,
+      "name": "info",
+      "id": 20
+    },
+    {
+      "typ": 2,
+      "name": "action",
+      "id": 21
+    },
+    {
+      "typ": 11,
+      "name": "tribute",
+      "id": 22
+    },
+    {
+      "typ": 12,
+      "name": "activeRowable",
+      "id": 23
+    },
+    {
+      "typ": 13,
+      "name": "addable",
+      "id": 24
+    },
+    {
+      "typ": 2,
+      "name": "tableName",
+      "id": 25
+    },
+    {
+      "typ": 14,
+      "name": "addFunsable",
+      "id": 26
+    },
+    {
+      "typ": 10,
+      "name": "posibilitys",
+      "id": 27
+    },
+    {
+      "typ": 15,
+      "name": "addMethodsable",
+      "id": 28
+    },
+    {
+      "typ": -10,
+      "name": "posibilitys",
+      "id": 29
+    },
+    {
+      "typ": 16,
+      "name": "addOrGetSynonymable",
+      "id": 30
+    },
+    {
+      "typ": 17,
+      "name": "addScriptable",
+      "id": 31
+    },
+    {
+      "typ": 2,
+      "name": "code",
+      "id": 32
+    },
+    {
+      "typ": 18,
+      "name": "addStandartsable",
+      "id": 33
+    },
+    {
+      "typ": 19,
+      "name": "addSynonymsable",
+      "id": 34
+    },
+    {
+      "typ": 20,
+      "name": "addTypeWithNameable",
+      "id": 35
+    },
+    {
+      "typ": 21,
+      "name": "addVarsable",
+      "id": 36
+    },
+    {
+      "typ": 2,
+      "name": "textWithoutFunc",
+      "id": 37
+    },
+    {
+      "typ": 22,
+      "name": "allowedInnerable",
+      "id": 38
+    },
+    {
+      "typ": 6,
+      "name": "element",
+      "id": 39
+    },
+    {
+      "typ": 23,
+      "name": "codeToHtmlable",
+      "id": 40
+    },
+    {
+      "typ": 9,
+      "name": "script",
+      "id": 41
+    },
+    {
+      "typ": 24,
+      "name": "createFieldable",
+      "id": 42
+    },
+    {
+      "typ": 25,
+      "name": "createFunable",
+      "id": 43
+    },
+    {
+      "typ": 26,
+      "name": "databaseReadyAndFilledWithDefaultsable",
+      "id": 44
+    },
+    {
+      "typ": 27,
+      "name": "extendArrayable",
+      "id": 45
+    },
+    {
+      "typ": 4,
+      "name": "array",
+      "id": 46
+    },
+    {
+      "typ": 28,
+      "name": "findConstructorForTypeable",
+      "id": 47
+    },
+    {
+      "typ": 1,
+      "name": "type_id",
+      "id": 48
+    },
+    {
+      "typ": 29,
+      "name": "findFieldsForTypable",
+      "id": 49
+    },
+    {
+      "typ": 30,
+      "name": "findFunByNameable",
+      "id": 50
+    },
+    {
+      "typ": 31,
+      "name": "findMethodsForTypeable",
+      "id": 51
+    },
+    {
+      "typ": 32,
+      "name": "findSynonymByIdable",
+      "id": 52
+    },
+    {
+      "typ": 1,
+      "name": "id",
+      "id": 53
+    },
+    {
+      "typ": 33,
+      "name": "findSynonymForTypable",
+      "id": 54
+    },
+    {
+      "typ": 34,
+      "name": "findSynonymTypForFieldsable",
+      "id": 55
+    },
+    {
+      "typ": -8,
+      "name": "fields",
+      "id": 56
+    },
+    {
+      "typ": 2,
+      "name": "attr",
+      "id": 57
+    },
+    {
+      "typ": 35,
+      "name": "findSynonymTypForFieldsSynonymable",
+      "id": 58
+    },
+    {
+      "typ": 8,
+      "name": "fields",
+      "id": 59
+    },
+    {
+      "typ": 36,
+      "name": "findSynonymTypForFieldsSynonymOnObjectable",
+      "id": 60
+    },
+    {
+      "typ": 37,
+      "name": "findSynonymTypForFieldsTypable",
+      "id": 61
+    },
+    {
+      "typ": 38,
+      "name": "findSynonymTypForTypable",
+      "id": 62
+    },
+    {
+      "typ": 1,
+      "name": "typ_id",
+      "id": 63
+    },
+    {
+      "typ": 39,
+      "name": "findTypForSynonymable",
+      "id": 64
+    },
+    {
+      "typ": 2,
+      "name": "synonym",
+      "id": 65
+    },
+    {
+      "typ": 40,
+      "name": "findTypForSynonymOrCreateable",
+      "id": 66
+    },
+    {
+      "typ": 41,
+      "name": "findTypesByFieldSynonymsable",
+      "id": 67
+    },
+    {
+      "typ": 2,
+      "name": "params",
+      "id": 68
+    },
+    {
+      "typ": 42,
+      "name": "getAllable",
+      "id": 69
+    },
+    {
+      "typ": 43,
+      "name": "getAllFieldsable",
+      "id": 70
+    },
+    {
+      "typ": 44,
+      "name": "getAllFunsable",
+      "id": 71
+    },
+    {
+      "typ": 45,
+      "name": "getAllSynonymsable",
+      "id": 72
+    },
+    {
+      "typ": 46,
+      "name": "getCreateable",
+      "id": 73
+    },
+    {
+      "typ": 2,
+      "name": "typ",
+      "id": 74
+    },
+    {
+      "typ": 4,
+      "name": "value",
+      "id": 75
+    },
+    {
+      "typ": 47,
+      "name": "getFloatCallable",
+      "id": 76
+    },
+    {
+      "typ": 48,
+      "name": "getFunctionLinesable",
+      "id": 77
+    },
+    {
+      "typ": -9,
+      "name": "script",
+      "id": 78
+    },
+    {
+      "typ": 49,
+      "name": "getIdable",
+      "id": 79
+    },
+    {
+      "typ": 50,
+      "name": "getLinesable",
+      "id": 80
+    },
+    {
+      "typ": 6,
+      "name": "body",
+      "id": 81
+    },
+    {
+      "typ": 51,
+      "name": "getVarsable",
+      "id": 82
+    },
+    {
+      "typ": 1,
+      "name": "type",
+      "id": 83
+    },
+    {
+      "typ": 52,
+      "name": "handleErrorable",
+      "id": 84
+    },
+    {
+      "typ": 4,
+      "name": "err",
+      "id": 85
+    },
+    {
+      "typ": 53,
+      "name": "htmlLineToCodeable",
+      "id": 86
+    },
+    {
+      "typ": 5,
+      "name": "lineElem",
+      "id": 87
+    },
+    {
+      "typ": 54,
+      "name": "htmlToCodeable",
+      "id": 88
+    },
+    {
+      "typ": 5,
+      "name": "elem",
+      "id": 89
+    },
+    {
+      "typ": 55,
+      "name": "initCalcable",
+      "id": 90
+    },
+    {
+      "typ": 2,
+      "name": "vars",
+      "id": 91
+    },
+    {
+      "typ": 56,
+      "name": "initCalcEventable",
+      "id": 92
+    },
+    {
+      "typ": 57,
+      "name": "initCreateEventable",
+      "id": 93
+    },
+    {
+      "typ": 58,
+      "name": "initEditorable",
+      "id": 94
+    },
+    {
+      "typ": 2,
+      "name": "funName",
+      "id": 95
+    },
+    {
+      "typ": 59,
+      "name": "initFunBuilderable",
+      "id": 96
+    },
+    {
+      "typ": 60,
+      "name": "initObjectBuilderable",
+      "id": 97
+    },
+    {
+      "typ": 2,
+      "name": "typeSyn",
+      "id": 98
+    },
+    {
+      "typ": 4,
+      "name": "scope",
+      "id": 99
+    },
+    {
+      "typ": 61,
+      "name": "initQueryBuilderable",
+      "id": 100
+    },
+    {
+      "typ": 62,
+      "name": "initTypeEditorable",
+      "id": 101
+    },
+    {
+      "typ": 63,
+      "name": "initTypeViewable",
+      "id": 102
+    },
+    {
+      "typ": 64,
+      "name": "isExportFunable",
+      "id": 103
+    },
+    {
+      "typ": 65,
+      "name": "loadScriptable",
+      "id": 104
+    },
+    {
+      "typ": 4,
+      "name": "doc",
+      "id": 105
+    },
+    {
+      "typ": 66,
+      "name": "loadScriptsable",
+      "id": 106
+    },
+    {
+      "typ": 67,
+      "name": "loadTypeable",
+      "id": 107
+    },
+    {
+      "typ": 68,
+      "name": "makeEditableable",
+      "id": 108
+    },
+    {
+      "typ": 69,
+      "name": "menuItemTemplateable",
+      "id": 109
+    },
+    {
+      "typ": 4,
+      "name": "item",
+      "id": 110
+    },
+    {
+      "typ": 70,
+      "name": "myTimerable",
+      "id": 111
+    },
+    {
+      "typ": 71,
+      "name": "parseDocable",
+      "id": 112
+    },
+    {
+      "typ": 2,
+      "name": "aPath",
+      "id": 113
+    },
+    {
+      "typ": 72,
+      "name": "posibilitiesForTypable",
+      "id": 114
+    },
+    {
+      "typ": 73,
+      "name": "readFileable",
+      "id": 115
+    },
+    {
+      "typ": 74,
+      "name": "readPathsable",
+      "id": 116
+    },
+    {
+      "typ": 75,
+      "name": "saveCangesable",
+      "id": 117
+    },
+    {
+      "typ": 76,
+      "name": "selectCallable",
+      "id": 118
+    },
+    {
+      "typ": 77,
+      "name": "selectCreateable",
+      "id": 119
+    },
+    {
+      "typ": 78,
+      "name": "selectFloatCallable",
+      "id": 120
+    },
+    {
+      "typ": 79,
+      "name": "selectMathable",
+      "id": 121
+    },
+    {
+      "typ": 80,
+      "name": "selectTemplateable",
+      "id": 122
+    },
+    {
+      "typ": 81,
+      "name": "selectVarable",
+      "id": 123
+    },
+    {
+      "typ": 82,
+      "name": "synonymable",
+      "id": 124
+    },
+    {
+      "typ": 83,
+      "name": "testable",
+      "id": 125
+    },
+    {
+      "typ": 84,
+      "name": "typable",
+      "id": 126
+    },
+    {
+      "typ": 85,
+      "name": "valuesable",
+      "id": 127
+    },
+    {
+      "typ": -2,
+      "name": "text",
+      "id": 128
+    },
+    {
+      "typ": 7,
+      "name": "cb",
+      "id": 129
+    },
+    {
+      "typ": 86,
+      "name": "writeable",
+      "id": 130
+    },
+    {
+      "typ": 4,
+      "name": "element",
+      "id": 131
+    },
+    {
+      "typ": 87,
+      "name": "writeFileable",
+      "id": 132
+    },
+    {
+      "typ": -2,
+      "name": "aPath",
+      "id": 133
+    },
+    {
+      "typ": -2,
+      "name": "aText",
+      "id": 134
     }
   ],
   "synonym_typ": [],
   "field": [
     {
-      "from_typ": 4,
-      "synonym": 5,
-      "typ": 1
-    },
-    {
-      "from_typ": 4,
-      "synonym": 6,
+      "from_typ": 6,
+      "synonym": 7,
       "typ": 2
     },
     {
-      "from_typ": 4,
-      "synonym": 8,
-      "typ": 5
+      "from_typ": 8,
+      "synonym": 10,
+      "typ": 1
     },
     {
-      "from_typ": 4,
-      "synonym": 9,
-      "typ": 0
-    },
-    {
-      "from_typ": 6,
+      "from_typ": 8,
       "synonym": 11,
-      "typ": 1,
-      "beschreibung": "folder with the name of the projekt"
+      "typ": 1
     },
     {
-      "from_typ": 7,
+      "from_typ": 8,
+      "synonym": 12,
+      "typ": 1
+    },
+    {
+      "from_typ": 8,
       "synonym": 13,
+      "typ": 2
+    },
+    {
+      "from_typ": 9,
+      "synonym": 15,
+      "typ": 1
+    },
+    {
+      "from_typ": 9,
+      "synonym": 16,
+      "typ": 1
+    },
+    {
+      "from_typ": 9,
+      "synonym": 17,
+      "typ": 2
+    },
+    {
+      "from_typ": 9,
+      "synonym": 13,
+      "typ": 2
+    },
+    {
+      "from_typ": 9,
+      "synonym": 18,
+      "typ": 2
+    },
+    {
+      "from_typ": 10,
+      "synonym": 17,
+      "typ": 2,
+      "beschreibung": "main text and filtercriteria"
+    },
+    {
+      "from_typ": 10,
+      "synonym": 20,
+      "typ": 2,
+      "beschreibung": "info text on the right side of the autocomplete"
+    },
+    {
+      "from_typ": 10,
+      "synonym": 21,
+      "typ": 2,
+      "beschreibung": "what the editor have to insert when u choose it"
+    },
+    {
+      "from_typ": 13,
+      "synonym": 25,
+      "typ": 2
+    },
+    {
+      "from_typ": 13,
+      "synonym": 4,
       "typ": 4
     },
     {
-      "from_typ": 8,
-      "synonym": 15,
+      "from_typ": 14,
+      "synonym": 27,
+      "typ": 10
+    },
+    {
+      "from_typ": 15,
+      "synonym": 29,
+      "typ": -10
+    },
+    {
+      "from_typ": 16,
+      "synonym": 12,
+      "typ": 1
+    },
+    {
+      "from_typ": 16,
+      "synonym": 17,
+      "typ": 2
+    },
+    {
+      "from_typ": 17,
+      "synonym": 17,
+      "typ": 2
+    },
+    {
+      "from_typ": 17,
+      "synonym": 32,
+      "typ": 2
+    },
+    {
+      "from_typ": 18,
+      "synonym": 27,
+      "typ": 10
+    },
+    {
+      "from_typ": 19,
+      "synonym": 29,
+      "typ": -10
+    },
+    {
+      "from_typ": 20,
+      "synonym": 17,
+      "typ": 2
+    },
+    {
+      "from_typ": 21,
+      "synonym": 27,
+      "typ": 10
+    },
+    {
+      "from_typ": 21,
+      "synonym": 37,
+      "typ": 2,
+      "beschreibung": "current text to autocomplete"
+    },
+    {
+      "from_typ": 22,
+      "synonym": 39,
       "typ": 6
     },
     {
-      "from_typ": 8,
+      "from_typ": 23,
+      "synonym": 32,
+      "typ": 2
+    },
+    {
+      "from_typ": 23,
+      "synonym": 41,
+      "typ": 9
+    },
+    {
+      "from_typ": 24,
+      "synonym": 10,
+      "typ": 1
+    },
+    {
+      "from_typ": 24,
+      "synonym": 11,
+      "typ": 1
+    },
+    {
+      "from_typ": 24,
+      "synonym": 12,
+      "typ": 1
+    },
+    {
+      "from_typ": 24,
+      "synonym": 13,
+      "typ": 2
+    },
+    {
+      "from_typ": 25,
+      "synonym": 15,
+      "typ": 1
+    },
+    {
+      "from_typ": 25,
       "synonym": 16,
-      "typ": 2,
-      "beschreibung": "starts the depugger"
+      "typ": 1
+    },
+    {
+      "from_typ": 25,
+      "synonym": 17,
+      "typ": 2
+    },
+    {
+      "from_typ": 25,
+      "synonym": 13,
+      "typ": 2
+    },
+    {
+      "from_typ": 25,
+      "synonym": 18,
+      "typ": 2
+    },
+    {
+      "from_typ": 27,
+      "synonym": 4,
+      "typ": 4,
+      "beschreibung": "can be an object or an array"
+    },
+    {
+      "from_typ": 27,
+      "synonym": 46,
+      "typ": 4
+    },
+    {
+      "from_typ": 28,
+      "synonym": 48,
+      "typ": 1
+    },
+    {
+      "from_typ": 29,
+      "synonym": 48,
+      "typ": 1
+    },
+    {
+      "from_typ": 30,
+      "synonym": 17,
+      "typ": 2
+    },
+    {
+      "from_typ": 31,
+      "synonym": 48,
+      "typ": 1
+    },
+    {
+      "from_typ": 32,
+      "synonym": 53,
+      "typ": 1
+    },
+    {
+      "from_typ": 33,
+      "synonym": 48,
+      "typ": 1
+    },
+    {
+      "from_typ": 34,
+      "synonym": 56,
+      "typ": -8
+    },
+    {
+      "from_typ": 34,
+      "synonym": 57,
+      "typ": 2
+    },
+    {
+      "from_typ": 35,
+      "synonym": 59,
+      "typ": 8
+    },
+    {
+      "from_typ": 36,
+      "synonym": 4,
+      "typ": -4
+    },
+    {
+      "from_typ": 37,
+      "synonym": 59,
+      "typ": 8
+    },
+    {
+      "from_typ": 38,
+      "synonym": 63,
+      "typ": 1
+    },
+    {
+      "from_typ": 39,
+      "synonym": 65,
+      "typ": 2
+    },
+    {
+      "from_typ": 40,
+      "synonym": 65,
+      "typ": 2
+    },
+    {
+      "from_typ": 41,
+      "synonym": 68,
+      "typ": 2
+    },
+    {
+      "from_typ": 42,
+      "synonym": 25,
+      "typ": 2
+    },
+    {
+      "from_typ": 46,
+      "synonym": 74,
+      "typ": 2
+    },
+    {
+      "from_typ": 46,
+      "synonym": 75,
+      "typ": 4
+    },
+    {
+      "from_typ": 47,
+      "synonym": 17,
+      "typ": 2
+    },
+    {
+      "from_typ": 48,
+      "synonym": 32,
+      "typ": 2
+    },
+    {
+      "from_typ": 48,
+      "synonym": 78,
+      "typ": -9
+    },
+    {
+      "from_typ": 49,
+      "synonym": 25,
+      "typ": 2
+    },
+    {
+      "from_typ": 50,
+      "synonym": 81,
+      "typ": 6
+    },
+    {
+      "from_typ": 51,
+      "synonym": 83,
+      "typ": 1
+    },
+    {
+      "from_typ": 52,
+      "synonym": 85,
+      "typ": 4
+    },
+    {
+      "from_typ": 53,
+      "synonym": 87,
+      "typ": 5
+    },
+    {
+      "from_typ": 54,
+      "synonym": 89,
+      "typ": 5
+    },
+    {
+      "from_typ": 55,
+      "synonym": 89,
+      "typ": 5
+    },
+    {
+      "from_typ": 55,
+      "synonym": 91,
+      "typ": 2
+    },
+    {
+      "from_typ": 58,
+      "synonym": 95,
+      "typ": 2
+    },
+    {
+      "from_typ": 60,
+      "synonym": 98,
+      "typ": 2
+    },
+    {
+      "from_typ": 60,
+      "synonym": 99,
+      "typ": 4
+    },
+    {
+      "from_typ": 60,
+      "synonym": 89,
+      "typ": 5
+    },
+    {
+      "from_typ": 64,
+      "synonym": 39,
+      "typ": 6
+    },
+    {
+      "from_typ": 65,
+      "synonym": 105,
+      "typ": 4
+    },
+    {
+      "from_typ": 67,
+      "synonym": 105,
+      "typ": 4
+    },
+    {
+      "from_typ": 68,
+      "synonym": 22,
+      "typ": 11
+    },
+    {
+      "from_typ": 69,
+      "synonym": 110,
+      "typ": 4
+    },
+    {
+      "from_typ": 71,
+      "synonym": 113,
+      "typ": 2
+    },
+    {
+      "from_typ": 72,
+      "synonym": 12,
+      "typ": 1
+    },
+    {
+      "from_typ": 72,
+      "synonym": 29,
+      "typ": -10
+    },
+    {
+      "from_typ": 73,
+      "synonym": 113,
+      "typ": 2
+    },
+    {
+      "from_typ": 74,
+      "synonym": 18,
+      "typ": 2
+    },
+    {
+      "from_typ": 76,
+      "synonym": 110,
+      "typ": 4
+    },
+    {
+      "from_typ": 77,
+      "synonym": 110,
+      "typ": 4
+    },
+    {
+      "from_typ": 78,
+      "synonym": 110,
+      "typ": 4
+    },
+    {
+      "from_typ": 80,
+      "synonym": 110,
+      "typ": 4
+    },
+    {
+      "from_typ": 81,
+      "synonym": 110,
+      "typ": 4
+    },
+    {
+      "from_typ": 82,
+      "synonym": 12,
+      "typ": 1
+    },
+    {
+      "from_typ": 84,
+      "synonym": 53,
+      "typ": 1
+    },
+    {
+      "from_typ": 85,
+      "synonym": 128,
+      "typ": -2
+    },
+    {
+      "from_typ": 85,
+      "synonym": 129,
+      "typ": 7
+    },
+    {
+      "from_typ": 86,
+      "synonym": 131,
+      "typ": 4
+    },
+    {
+      "from_typ": 87,
+      "synonym": 133,
+      "typ": -2
+    },
+    {
+      "from_typ": 87,
+      "synonym": 134,
+      "typ": -2
     }
   ],
   "fun": [
     {
-      "param": 7,
-      "returns": 6,
-      "name": "build",
-      "beschreibung": "build or extends a node.js projekt for an express app config",
-      "path": "build.js"
+      "param": 12,
+      "returns": 5,
+      "name": "activeRow",
+      "path": "activeRow.js"
     },
     {
-      "param": 8,
-      "name": "run",
-      "beschreibung": "runs an node.js project",
-      "path": "run.js"
+      "param": 13,
+      "name": "add",
+      "beschreibung": "add object to db",
+      "path": "add.js"
     },
     {
-      "param": 9,
-      "name": "main",
-      "beschreibung": "startpoint\nconsole.log(\"main got runned!!\")\n    var res = ({ project: { path: \"hallo\" }, debug: true }).wrap().run()",
-      "path": "main.js"
+      "param": 14,
+      "returns": -10,
+      "name": "addFuns",
+      "beschreibung": "extends posibilitys for autocomplete",
+      "path": "addFuns.js"
+    },
+    {
+      "param": 15,
+      "returns": 10,
+      "name": "addMethods",
+      "beschreibung": "extends posibilitys for autocomplete",
+      "path": "addMethods.js"
+    },
+    {
+      "param": 16,
+      "returns": 1,
+      "name": "addOrGetSynonym",
+      "beschreibung": "addOrGetSynonym",
+      "path": "addOrGetSynonym.js"
+    },
+    {
+      "param": 17,
+      "name": "addScript",
+      "beschreibung": "add script to file and db",
+      "path": "addScript.js"
+    },
+    {
+      "param": 18,
+      "returns": -10,
+      "name": "addStandarts",
+      "beschreibung": "extends posibilitys for autocomplete",
+      "path": "addStandarts.js"
+    },
+    {
+      "param": 19,
+      "returns": 10,
+      "name": "addSynonyms",
+      "beschreibung": "extends posibilitys for autocomplete",
+      "path": "addSynonyms.js"
+    },
+    {
+      "param": 20,
+      "returns": 1,
+      "name": "addTypeWithName",
+      "beschreibung": "addTypeWithName",
+      "path": "addTypeWithName.js"
+    },
+    {
+      "param": 21,
+      "returns": -10,
+      "name": "addVars",
+      "beschreibung": "extend the posibilitys for the autocomplete",
+      "path": "addVars.js"
+    },
+    {
+      "param": 22,
+      "returns": 3,
+      "name": "allowedInner",
+      "beschreibung": "white list for elements that are allowed in sless",
+      "path": "allowedInner.js"
+    },
+    {
+      "param": 23,
+      "name": "codeToHtml",
+      "beschreibung": "adds the code to the editor",
+      "path": "codeToHtml.js"
+    },
+    {
+      "param": 24,
+      "returns": 8,
+      "name": "createField",
+      "path": "createField.js"
+    },
+    {
+      "param": 25,
+      "returns": 9,
+      "name": "createFun",
+      "path": "createFun.js"
+    },
+    {
+      "param": 26,
+      "name": "databaseReadyAndFilledWithDefaults",
+      "path": "databaseReadyAndFilledWithDefaults.js"
+    },
+    {
+      "param": 27,
+      "returns": -4,
+      "name": "extendArray",
+      "beschreibung": "extends the array with one object or a list of objects",
+      "path": "extendArray.js"
+    },
+    {
+      "param": 28,
+      "returns": -9,
+      "name": "findConstructorForType",
+      "beschreibung": "returns the typ",
+      "path": "findConstructorForType.js"
+    },
+    {
+      "param": 29,
+      "returns": -8,
+      "name": "findFieldsForTyp",
+      "path": "findFieldsForTyp.js"
+    },
+    {
+      "param": 30,
+      "returns": -9,
+      "name": "findFunByName",
+      "path": "findFunByName.js"
+    },
+    {
+      "param": 31,
+      "returns": 9,
+      "name": "findMethodsForType",
+      "beschreibung": "funs with typ as param",
+      "path": "findMethodsForType.js"
+    },
+    {
+      "param": 32,
+      "returns": 1,
+      "name": "findSynonymById",
+      "path": "findSynonymById.js"
+    },
+    {
+      "param": 33,
+      "returns": 1,
+      "name": "findSynonymForTyp",
+      "path": "findSynonymForTyp.js"
+    },
+    {
+      "param": 34,
+      "returns": 8,
+      "name": "findSynonymTypForFields",
+      "path": "findSynonymTypForFields.js"
+    },
+    {
+      "param": 35,
+      "returns": -8,
+      "name": "findSynonymTypForFieldsSynonym",
+      "path": "findSynonymTypForFieldsSynonym.js"
+    },
+    {
+      "param": 36,
+      "returns": 8,
+      "name": "findSynonymTypForFieldsSynonymOnObject",
+      "path": "findSynonymTypForFieldsSynonymOnObject.js"
+    },
+    {
+      "param": 37,
+      "returns": -8,
+      "name": "findSynonymTypForFieldsTyp",
+      "path": "findSynonymTypForFieldsTyp.js"
+    },
+    {
+      "param": 38,
+      "returns": 8,
+      "name": "findSynonymTypForTyp",
+      "beschreibung": "todo returns an array of arrays of typ fields",
+      "path": "findSynonymTypForTyp.js"
+    },
+    {
+      "param": 39,
+      "returns": 1,
+      "name": "findTypForSynonym",
+      "path": "findTypForSynonym.js"
+    },
+    {
+      "param": 40,
+      "returns": 1,
+      "name": "findTypForSynonymOrCreate",
+      "path": "findTypForSynonymOrCreate.js"
+    },
+    {
+      "param": 41,
+      "returns": -8,
+      "name": "findTypesByFieldSynonyms",
+      "path": "findTypesByFieldSynonyms.js"
+    },
+    {
+      "param": 42,
+      "returns": 4,
+      "name": "getAll",
+      "beschreibung": "get all Elements from table",
+      "path": "getAll.js"
+    },
+    {
+      "param": 43,
+      "returns": 8,
+      "name": "getAllFields",
+      "path": "getAllFields.js"
+    },
+    {
+      "param": 44,
+      "returns": -9,
+      "name": "getAllFuns",
+      "path": "getAllFuns.js"
+    },
+    {
+      "param": 45,
+      "returns": -1,
+      "name": "getAllSynonyms",
+      "path": "getAllSynonyms.js"
+    },
+    {
+      "param": 46,
+      "returns": 5,
+      "name": "getCreate",
+      "path": "getCreate.js"
+    },
+    {
+      "param": 47,
+      "returns": 5,
+      "name": "getFloatCall",
+      "path": "getFloatCall.js"
+    },
+    {
+      "param": 48,
+      "returns": -5,
+      "name": "getFunctionLines",
+      "path": "getFunctionLines.js"
+    },
+    {
+      "param": 49,
+      "returns": 1,
+      "name": "getId",
+      "path": "getId.js"
+    },
+    {
+      "param": 50,
+      "returns": 5,
+      "name": "getLines",
+      "beschreibung": "get all lines for the editor out of a body element of the ast",
+      "path": "getLines.js"
+    },
+    {
+      "param": 51,
+      "returns": 1,
+      "name": "getVars",
+      "path": "getVars.js"
+    },
+    {
+      "param": 52,
+      "name": "handleError",
+      "path": "handleError.js"
+    },
+    {
+      "param": 53,
+      "returns": 2,
+      "name": "htmlLineToCode",
+      "path": "htmlLineToCode.js"
+    },
+    {
+      "param": 54,
+      "returns": 2,
+      "name": "htmlToCode",
+      "path": "htmlToCode.js"
+    },
+    {
+      "param": 55,
+      "name": "initCalc",
+      "beschreibung": "inits the Calc",
+      "path": "initCalc.js"
+    },
+    {
+      "param": 56,
+      "name": "initCalcEvent",
+      "path": "initCalcEvent.js"
+    },
+    {
+      "param": 57,
+      "name": "initCreateEvent",
+      "path": "initCreateEvent.js"
+    },
+    {
+      "param": 58,
+      "name": "initEditor",
+      "path": "initEditor.js"
+    },
+    {
+      "param": 59,
+      "name": "initFunBuilder",
+      "path": "initFunBuilder.js"
+    },
+    {
+      "param": 60,
+      "name": "initObjectBuilder",
+      "path": "initObjectBuilder.js"
+    },
+    {
+      "param": 61,
+      "name": "initQueryBuilder",
+      "path": "initQueryBuilder.js"
+    },
+    {
+      "param": 62,
+      "name": "initTypeEditor",
+      "path": "initTypeEditor.js"
+    },
+    {
+      "param": 63,
+      "name": "initTypeView",
+      "path": "initTypeView.js"
+    },
+    {
+      "param": 64,
+      "returns": 3,
+      "name": "isExportFun",
+      "path": "isExportFun.js"
+    },
+    {
+      "param": 65,
+      "name": "loadScript",
+      "beschreibung": "add script to db",
+      "path": "loadScript.js"
+    },
+    {
+      "param": 66,
+      "name": "loadScripts",
+      "beschreibung": "load multiple scripts to db",
+      "path": "loadScripts.js"
+    },
+    {
+      "param": 67,
+      "name": "loadType",
+      "beschreibung": "add typ to db",
+      "path": "loadType.js"
+    },
+    {
+      "param": 68,
+      "name": "makeEditable",
+      "beschreibung": "makes the div editable and",
+      "path": "makeEditable.js"
+    },
+    {
+      "param": 69,
+      "returns": 2,
+      "name": "menuItemTemplate",
+      "path": "menuItemTemplate.js"
+    },
+    {
+      "param": 70,
+      "name": "myTimer",
+      "beschreibung": "some Test",
+      "path": "myTimer.js"
+    },
+    {
+      "param": 71,
+      "returns": 4,
+      "name": "parseDoc",
+      "path": "parseDoc.js"
+    },
+    {
+      "param": 72,
+      "returns": 10,
+      "name": "posibilitiesForTyp",
+      "beschreibung": "extends posibilitys for autocomplete",
+      "path": "posibilitiesForTyp.js"
+    },
+    {
+      "param": 73,
+      "returns": 2,
+      "name": "readFile",
+      "beschreibung": "with promise",
+      "path": "readFile.js"
+    },
+    {
+      "param": 74,
+      "returns": -2,
+      "name": "readPaths",
+      "beschreibung": "works with promise",
+      "path": "readPaths.js"
+    },
+    {
+      "param": 75,
+      "name": "saveCanges",
+      "beschreibung": "saveCanges from editor",
+      "path": "saveCanges.js"
+    },
+    {
+      "param": 76,
+      "returns": -2,
+      "name": "selectCall",
+      "path": "selectCall.js"
+    },
+    {
+      "param": 77,
+      "returns": -2,
+      "name": "selectCreate",
+      "path": "selectCreate.js"
+    },
+    {
+      "param": 78,
+      "returns": -2,
+      "name": "selectFloatCall",
+      "path": "selectFloatCall.js"
+    },
+    {
+      "param": 79,
+      "returns": -2,
+      "name": "selectMath",
+      "path": "selectMath.js"
+    },
+    {
+      "param": 80,
+      "returns": -2,
+      "name": "selectTemplate",
+      "path": "selectTemplate.js"
+    },
+    {
+      "param": 81,
+      "returns": -2,
+      "name": "selectVar",
+      "path": "selectVar.js"
+    },
+    {
+      "param": 82,
+      "returns": 1,
+      "name": "synonym",
+      "path": "synonym.js"
+    },
+    {
+      "param": 83,
+      "returns": -2,
+      "name": "test",
+      "path": "test.js"
+    },
+    {
+      "param": 84,
+      "returns": 1,
+      "name": "typ",
+      "path": "typ.js"
+    },
+    {
+      "param": 85,
+      "name": "values",
+      "path": "values.js"
+    },
+    {
+      "param": 86,
+      "returns": -5,
+      "name": "write",
+      "beschreibung": "gives the HTML to the AST from JS",
+      "path": "write.js"
+    },
+    {
+      "param": 87,
+      "returns": -2,
+      "name": "writeFile",
+      "path": "writeFile.js"
     }
   ],
   "count": 0
