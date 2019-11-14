@@ -97,8 +97,6 @@ setTimeout(function () {
     
   }
 
-
-
   function wrap(object){
 {{each(options.funs)}}
     wrapOne(object, {{@this.param}}, "{{@this.name}}")

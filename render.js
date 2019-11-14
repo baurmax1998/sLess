@@ -147,7 +147,7 @@ function ready() {
     loadScripts()
   })
 
-  initScriptView();
+  // initScriptView();
   // initEditor("main");
   // initQueryBuilder();
   // initObjectBuilder("number", {});
