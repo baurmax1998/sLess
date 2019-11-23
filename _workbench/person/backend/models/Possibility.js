@@ -1,36 +1,17 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
 
 const possibilitySchema = mongoose.Schema({
-  who: {
+  name: {
     type: String,
     required: true,
-    trim: true
   },
-  begin: {
-    type: Date,
-    required: true,
-    trim: true
-  },
-  end: {
-    type: Date,
-    required: true,
-    trim: true
-  },
-  what: {
+  platform: {
     type: String,
-    required: true,
-    trim: true
+    required: false,
   },
-  fromGroup: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  fromModule: {
-    type: String,
-    required: true,
-    trim: true
+  required: {
+    type: Array,
+    required: false,
   }
 })
 
