@@ -8,199 +8,94 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import Form from "react-jsonschema-form";
-
-const schema = {
-  title: "Creat an Action Template",
-  type: "object",
-  required: ["name"],
-  properties: {
-    name: { type: "string", title: "Action Name", },
-    platform: { type: "string", title: "Location/System" },
-    required: {
-      type: "array",
-      title: "Required",
-      items: {
-        "$ref": "#/definitions/requiremens"
-      }
-    }
-  },
-  "definitions": {
-    "requiremens": {
-      "title": "Condition",
-      "type": "object",
-      "properties": {
-        "required": {
-          title: "kind",
-          "type": "string",
-          "enum": [
-            "Weather",
-            "Member of",
-            "Every Week"
-          ]
-        }
-      },
-      "required": [
-        "required"
-      ],
-      "dependencies": {
-        "required": {
-          "oneOf": [
-            {
-              "properties": {
-                "required": {
-                  "enum": [
-                    "Weather"
-                  ]
-                },
-                "Weather": {
-                  "type": "string",
-                  "enum": [
-                    "Sunny",
-                    "Bad",
-                    "Snowy"
-                  ]
-                }
-              }
-            },
-            {
-              "properties": {
-                "required": {
-                  "enum": [
-                    "Member of"
-                  ]
-                },
-                "Group": {
-                  "type": "string",
-                  "enum": [
-                    "Beachies",
-                    "Mutlangen",
-                    "KB"
-                  ]
-                }
-              },
-              "required": [
-                "Group"
-              ]
-            },
-            {
-              "properties": {
-                "required": {
-                  "enum": [
-                    "Every Week"
-                  ]
-                },
-                "Monday": {
-                  "type": "boolean",
-                  "title": "Monday",
-                  "default": false
-                },
-                "Tuesday": {
-                  "type": "boolean",
-                  "title": "Tuesday",
-                  "default": false
-                },
-                "Wednesday": {
-                  "type": "boolean",
-                  "title": "Wednesday",
-                  "default": false
-                },
-                "Thursday": {
-                  "type": "boolean",
-                  "title": "Thursday",
-                  "default": false
-                },
-                "Thursday": {
-                  "type": "boolean",
-                  "title": "Thursday",
-                  "default": false
-                },
-                "Saturday": {
-                  "type": "boolean",
-                  "title": "Saturday",
-                  "default": false
-                },
-                "Sunday": {
-                  "type": "boolean",
-                  "title": "Sunday",
-                  "default": false
-                }
-              },
-            }
-          ]
-        }
-      }
-    }
-  }
-};
+import { TypeaheadField } from "react-jsonschema-form-extras/lib/TypeaheadField";
 
 
 
 
-class App extends Component {
+
+
+class CreatPerson extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      uiSchema : {
+        friends: {
+          items: {
+            "ui:field": "typeahead",
+            typeahead: {
+              minLength: 0,
+              options: ["Karl", "Bob", "Peter"]
+            }
+          }
+        },
+        interests: {
+          items: {
+            "ui:field": "typeahead",
+            typeahead: {
+              minLength: 0,
+              options: ["Volleyball", "Kart", "Overwatch"]
+            }
+          }
+        }
+      },
+      schema :{
+        title: "Me",
+        type: "object",
+        required: ["name"],
+        properties: {
+          name: { type: "string", title: "Name" },
+          home: { type: "string", title: "Home" },
+          interests: {
+            type: "array",
+            title: "Intressts",
+            items: {
+              "type": "string",
+            }
+          },
+          friends: {
+            type: "array",
+            title: "Friends",
+            items: {
+              "type": "string",
+            }
+          },
+        }
+      } 
+
+    };
+
   }
 
   onSubmit({ formData }, e) {
+    formData.id = formData.name;
     console.log("Data submitted: ", formData)
-    
-    fetch('http://localhost:3030/possibilitys/', {
+
+    fetch('http://localhost:3030/persons/', {
       method: 'post',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },
-      cache: 'no-cache', 
+      cache: 'no-cache',
       body: JSON.stringify(formData)
     }).then(res => res.json())
-    .then(res => console.log(res))
-    .catch(err => err)
-  }
-
-  render() {
-    return (
-      <Container>
-        <Row>
-          <Col sm={12}><h1 className="App-title">Welcome to Posibilitys</h1></Col>
-        </Row>
-        <Row>
-          <Col sm={8}>
-            <Form schema={schema}
-              onSubmit={this.onSubmit} />
-          </Col>
-          <Col sm={4}><Posibilitys /></Col>
-        </Row>
-      </Container>
-
-    );
-  }
-}
-
-
-
-class Posibilitys extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: [
-        {
-          "_id": "5dd6d4d7e93c7f03c67e989f",
-          "name": "eins",
-          "__v": 0
-        },
-        {
-          "_id": "5dd6d4fae93c7f03c67e98a0",
-          "name": "zwei",
-          "__v": 0
-        }
-      ]
-    };
+      .then(res => console.log(res))
+      .catch(err => err)
   }
 
   callAPI() {
-    fetch("http://localhost:3030/possibilitys")
-      .then(res => res.text())
-      .then(res => this.setState({ list: JSON.parse(res) }))
+    fetch("http://localhost:3030/persons")
+      .then(res => res.json())
+      .then(res => {
+        let names = res.map(item => (item.name))
+        console.log(names)
+        let newState = Object.assign({}, this.state);
+        newState.uiSchema.friends.items.typeahead.options = names;
+
+        this.setState({ newState })
+      })
       .catch(err => err);
   }
 
@@ -210,14 +105,39 @@ class Posibilitys extends Component {
 
   render() {
     return (
-      <div className="list-group">
-        {this.state.list.map(item => (
-          <a href="#" className="list-group-item list-group-item-action" key={item._id}>{item.name}</a>
-        ))}
-      </div>
+      <Form
+        schema={this.state.schema}
+        uiSchema={this.state.uiSchema}
+        fields={{ typeahead: TypeaheadField }}
+        onSubmit={this.onSubmit} />
     );
   }
 }
+
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Container>
+        <Row>
+          <Col sm={12}><h1 className="App-title">Welcome to Person</h1></Col>
+        </Row>
+        <Row>
+          <Col sm={8}>
+            <CreatPerson></CreatPerson>
+          </Col>
+        </Row>
+      </Container>
+
+    );
+  }
+}
+
+
 
 ReactDOM.render(
   <App />

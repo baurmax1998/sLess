@@ -1,6 +1,6 @@
 const express = require('express')
 const port = process.env.PORT
-const posibilityRouter = require('./routers/possibility')
+const posibilityRouter = require('./routers/person')
 var cors = require("cors");
 require('./db/db')
 
