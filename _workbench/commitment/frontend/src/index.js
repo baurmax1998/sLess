@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
-import Container from 'react-bootstrap/Container';
+// import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -11,6 +11,8 @@ import Col from 'react-bootstrap/Col';
 import BigCalendar from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+
+import { Container, Button, Link } from 'react-floating-action-button'
 
 const events = [
   {
@@ -20,7 +22,7 @@ const events = [
     'end': new Date(2015, 3, 1)
   },
   {
-    'title': 'Long Event',
+    'title': 'Long Event Max',
     'start': new Date(2015, 3, 7),
     'end': new Date(2015, 3, 10)
   },
@@ -103,6 +105,24 @@ const events = [
   }
 ]
 
+const YourAwesomeComponent = () => {
+  return (
+      <Container>
+          <Link href="#"
+              tooltip="Create note link"
+              icon="glyphicon glyphicon-file" />
+          <Link href="#"
+              tooltip="Add user link"
+              icon="glyphicon glyphicon-user" />
+          <Button
+              tooltip="The big plus button!"
+              icon="glyphicon glyphicon-plus-sign"
+              rotate={true}
+              onClick={() => alert('FAB Rocks!')} />
+      </Container>
+  )
+}
+
 moment.locale("en");
 BigCalendar.momentLocalizer(moment);
 
@@ -126,20 +146,20 @@ class App extends Component {
 
   render() {
     return (
-      <div style={{ height: 700 }}>
+      <div>
         <button onClick={() => this.setState({ view: "day" })}>Day</button>
         <button onClick={() => this.setState({ view: "month" })}>Month</button>
         <BigCalendar
-          style={{ height: 500, width: this.state.width }}
           toolbar={false}
           events={events}
-          step={60}
+          step={10}
           views={allViews}
           view={this.state.view}
           onView={() => {}}
           date={this.state.date}
           onNavigate={date => this.setState({ date })}
         />
+        <YourAwesomeComponent/>
       </div>
     );
   }
