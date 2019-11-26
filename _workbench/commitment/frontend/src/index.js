@@ -7,135 +7,165 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import Form from "react-jsonschema-form";
-import { TypeaheadField } from "react-jsonschema-form-extras/lib/TypeaheadField";
 
+import BigCalendar from "react-big-calendar";
+import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
+const events = [
+  {
+    'title': 'All Day Event very long title',
+    'allDay': true,
+    'start': new Date(2015, 3, 0),
+    'end': new Date(2015, 3, 1)
+  },
+  {
+    'title': 'Long Event',
+    'start': new Date(2015, 3, 7),
+    'end': new Date(2015, 3, 10)
+  },
 
+  {
+    'title': 'DTS STARTS',
+    'start': new Date(2016, 2, 13, 0, 0, 0),
+    'end': new Date(2016, 2, 20, 0, 0, 0)
+  },
 
+  {
+    'title': 'DTS ENDS',
+    'start': new Date(2016, 10, 6, 0, 0, 0),
+    'end': new Date(2016, 10, 13, 0, 0, 0)
+  },
 
-
-class CreatPerson extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      uiSchema : {
-        friends: {
-          items: {
-            "ui:field": "typeahead",
-            typeahead: {
-              minLength: 0,
-              options: ["Karl", "Bob", "Peter"]
-            }
-          }
-        },
-        interests: {
-          items: {
-            "ui:field": "typeahead",
-            typeahead: {
-              minLength: 0,
-              options: ["Volleyball", "Kart", "Overwatch"]
-            }
-          }
-        }
-      },
-      schema :{
-        title: "Me",
-        type: "object",
-        required: ["name"],
-        properties: {
-          name: { type: "string", title: "Name" },
-          home: { type: "string", title: "Home" },
-          interests: {
-            type: "array",
-            title: "Intressts",
-            items: {
-              "type": "string",
-            }
-          },
-          friends: {
-            type: "array",
-            title: "Friends",
-            items: {
-              "type": "string",
-            }
-          },
-        }
-      } 
-
-    };
-
+  {
+    'title': 'Some Event',
+    'start': new Date(2015, 3, 9, 0, 0, 0),
+    'end': new Date(2015, 3, 9, 0, 0, 0)
+  },
+  {
+    'title': 'Conference',
+    'start': new Date(2015, 3, 11),
+    'end': new Date(2015, 3, 13),
+    desc: 'Big conference for important people'
+  },
+  {
+    'title': 'Meeting',
+    'start': new Date(2015, 3, 12, 10, 30, 0, 0),
+    'end': new Date(2015, 3, 12, 12, 30, 0, 0),
+    desc: 'Pre-meeting meeting, to prepare for the meeting'
+  },
+  {
+    'title': 'Lunch',
+    'start': new Date(2015, 3, 12, 12, 0, 0, 0),
+    'end': new Date(2015, 3, 12, 13, 0, 0, 0),
+    desc: 'Power lunch'
+  },
+  {
+    'title': 'Meeting',
+    'start': new Date(2015, 3, 12, 14, 0, 0, 0),
+    'end': new Date(2015, 3, 12, 15, 0, 0, 0)
+  },
+  {
+    'title': 'Happy Hour',
+    'start': new Date(2015, 3, 12, 17, 0, 0, 0),
+    'end': new Date(2015, 3, 12, 17, 30, 0, 0),
+    desc: 'Most important meal of the day'
+  },
+  {
+    'title': 'Dinner',
+    'start': new Date(2015, 3, 12, 20, 0, 0, 0),
+    'end': new Date(2015, 3, 12, 21, 0, 0, 0)
+  },
+  {
+    'title': 'Birthday Party',
+    'start': new Date(2015, 3, 13, 7, 0, 0),
+    'end': new Date(2015, 3, 13, 10, 30, 0)
+  },
+  {
+    'title': 'Birthday Party 2',
+    'start': new Date(2015, 3, 13, 7, 0, 0),
+    'end': new Date(2015, 3, 13, 10, 30, 0)
+  },
+  {
+    'title': 'Birthday Party 3',
+    'start': new Date(2015, 3, 13, 7, 0, 0),
+    'end': new Date(2015, 3, 13, 10, 30, 0)
+  },
+  {
+    'title': 'Late Night Event',
+    'start': new Date(2015, 3, 17, 19, 30, 0),
+    'end': new Date(2015, 3, 18, 2, 0, 0)
+  },
+  {
+    'title': 'Multi-day Event',
+    'start': new Date(2015, 3, 20, 19, 30, 0),
+    'end': new Date(2015, 3, 22, 2, 0, 0)
   }
+]
 
-  onSubmit({ formData }, e) {
-    formData.id = formData.name;
-    console.log("Data submitted: ", formData)
+moment.locale("en");
+BigCalendar.momentLocalizer(moment);
 
-    fetch('http://localhost:3030/persons/', {
-      method: 'post',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      cache: 'no-cache',
-      body: JSON.stringify(formData)
-    }).then(res => res.json())
-      .then(res => console.log(res))
-      .catch(err => err)
-  }
-
-  callAPI() {
-    fetch("http://localhost:3030/persons")
-      .then(res => res.json())
-      .then(res => {
-        let names = res.map(item => (item.name))
-        console.log(names)
-        let newState = Object.assign({}, this.state);
-        newState.uiSchema.friends.items.typeahead.options = names;
-
-        this.setState({ newState })
-      })
-      .catch(err => err);
-  }
-
-  componentDidMount() {
-    this.callAPI();
-  }
-
-  render() {
-    return (
-      <Form
-        schema={this.state.schema}
-        uiSchema={this.state.uiSchema}
-        fields={{ typeahead: TypeaheadField }}
-        onSubmit={this.onSubmit} />
-    );
-  }
-}
-
+const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    view: "day",
+    date: new Date(2015, 3, 12),
+    width: 500
+  };
+
+  componentDidMount() {
+    window.addEventListener("resize", () => {
+      /*this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });*/
+    });
   }
 
   render() {
     return (
-      <Container>
-        <Row>
-          <Col sm={12}><h1 className="App-title">Welcome to Person</h1></Col>
-        </Row>
-        <Row>
-          <Col sm={8}>
-            <CreatPerson></CreatPerson>
-          </Col>
-        </Row>
-      </Container>
-
+      <div style={{ height: 700 }}>
+        <button onClick={() => this.setState({ view: "day" })}>Day</button>
+        <button onClick={() => this.setState({ view: "month" })}>Month</button>
+        <BigCalendar
+          style={{ height: 500, width: this.state.width }}
+          toolbar={false}
+          events={events}
+          step={60}
+          views={allViews}
+          view={this.state.view}
+          onView={() => {}}
+          date={this.state.date}
+          onNavigate={date => this.setState({ date })}
+        />
+      </div>
     );
   }
 }
+
+// class App extends Component {
+//   constructor(props) {
+//     super(props);
+//   }
+
+//   render() {
+//     return (
+//       <Container>
+//         <Row>
+//           <Col sm={12}><h1 className="App-title">Welcome to Commitment</h1></Col>
+//         </Row>
+//         <Row>
+//           <Col sm={8}>
+//             <Basic></Basic>
+//           </Col>
+//         </Row>
+//       </Container>
+
+//     );
+//   }
+// }
 
 
 
