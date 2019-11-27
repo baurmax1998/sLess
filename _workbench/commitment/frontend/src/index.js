@@ -130,9 +130,9 @@ const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 
 class App extends Component {
   state = {
-    view: "day",
+    view: "month",
     date: new Date(2015, 3, 12),
-    width: 500
+    events: events
   };
 
   componentDidMount() {
@@ -144,19 +144,35 @@ class App extends Component {
     });
   }
 
+  handleSelect = ({ start, end }) => {
+    const title = window.prompt('New Event name')
+    if (title)
+      this.setState({
+        events: [
+          ...this.state.events,
+          {
+            start,
+            end,
+            title,
+          },
+        ],
+      })
+  }
+
   render() {
     return (
       <div>
-        <button onClick={() => this.setState({ view: "day" })}>Day</button>
-        <button onClick={() => this.setState({ view: "month" })}>Month</button>
         <BigCalendar
+          selectable
           toolbar={false}
-          events={events}
+          events={this.state.events}
           step={10}
           views={allViews}
           view={this.state.view}
           onView={() => {}}
           date={this.state.date}
+          onSelectEvent={event => alert(event.title)}
+          onSelectSlot={this.handleSelect}
           onNavigate={date => this.setState({ date })}
         />
         <YourAwesomeComponent/>
