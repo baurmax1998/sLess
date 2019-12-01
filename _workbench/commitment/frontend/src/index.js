@@ -134,12 +134,13 @@ class CreateCommitment extends Component {
     super(props);
 
     this.state = {
-      schema :{
+      schema: {
         title: "Create a Appointment",
         type: "object",
         required: ["name"],
         properties: {
           name: { type: "string", title: "Name" },
+          fulltime: { type: "boolean", title: "Full-Time" },
           start: {
             "type": "string",
             "format": "date-time"
@@ -148,8 +149,198 @@ class CreateCommitment extends Component {
             "type": "string",
             "format": "date-time"
           },
+          repeats: { type: "boolean", title: "Repeats" },
+          repeat: {
+            type: "object",
+            title: "Repeat",
+          },
+          persons: {
+            type: "array",
+            title: "Persons",
+            items: {
+              "type": "string",
+            }
+          },
+          place: { type: "string", title: "Place" },
+          notification: {
+            type: "array",
+            title: "Notification",
+            items: {
+              "type": "object",
+              properties: {
+                before: {
+                  type: "number"
+                },
+                type: {
+                  type: "string",
+                  enum: [
+                    "mins",
+                    "hours",
+                    "days",
+                    "weeks"
+                  ]
+                }
+              }
+            }
+          },
+          bescriptions: { type: "string", title: "Description", format: "textarea" },
+        },
+        required: [
+          "fulltime"
+        ],
+        dependencies: {
+          fulltime: {
+            oneOf: [
+              {
+                properties: {
+                  fulltime: { "enum": [false] },
+                  start: {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  end: {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              },
+              {
+                properties: {
+                  fulltime: { "enum": [true] },
+                  start: {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  end: {
+                    "type": "string",
+                    "format": "date"
+                  }
+                },
+              }
+            ]
+          },
+          repeats: {
+            oneOf: [
+              {
+                properties: {
+                  repeats: { "enum": [false] },
+                }
+              },
+              {
+                properties: {
+                  repeats: { "enum": [true] },
+                  repeat: {
+                    type: "object",
+                    properties: {
+                      all: {
+                        type: "number",
+                        default: 1
+                      },
+                      type: {
+                        "type": "string",
+                        "enum": [
+                          "day",
+                          "week",
+                          "month",
+                          "year"
+                        ],
+                        default: "week"
+                      },
+                      weekly: {},
+                      monthly: {},
+                      ends: {
+                        type: "object",
+                        properties: {
+                          while: {
+                            type: "string",
+                            enum: ["never", "on", "after"],
+                            default: "never"
+                          },
+                        },
+                        dependencies: {
+                          while: {
+                            oneOf: [{
+                              properties: {
+                                while: { "enum": ["on"] },
+                                date: {
+                                  type: "string",
+                                  format: "date",
+                                },
+                              },
+                            }, {
+                              properties: {
+                                while: { "enum": ["after"] },
+                                times: {
+                                  type: "number"
+                                }
+                              },
+                            }
+                            ]
+                          }
+                        }
+                      },
+
+
+                    },
+                    dependencies: {
+                      type: {
+                        oneOf: [{
+                          properties: {
+                            type: { "enum": ["week"] },
+                            weekly: {
+                              type: "object",
+                              properties: {
+                                "Monday": {
+                                  "type": "boolean",
+                                },
+                                "Tuesday": {
+                                  "type": "boolean",
+                                },
+                                "Wednesday": {
+                                  "type": "boolean",
+                                },
+                                "Thursday": {
+                                  "type": "boolean",
+                                },
+                                "Thursday": {
+                                  "type": "boolean",
+                                },
+                                "Saturday": {
+                                  "type": "boolean",
+                                },
+                                "Sunday": {
+                                  "type": "boolean",
+                                }
+                              },
+                            },
+                          },
+                        }, {
+                          properties: {
+                            type: { "enum": ["month"] },
+                            monthly: {
+                              type: "string",
+                              enum: ["1. of Month"
+                                , "15. of Month"
+                                , "last of Month"
+                                , "first Sunday"
+                              ]
+                            },
+                          },
+                        }
+                        ]
+                      }
+                    }
+                  }
+
+                },
+              }
+            ]
+          }
+
+
+
         }
-      } 
+      }
 
     };
 
