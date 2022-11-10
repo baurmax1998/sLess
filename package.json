@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "dot": "^1.1.2",
-    "electron": "^6.0.10",
+    "electron": "^18.3.7",
     "fs-extra": "^8.1.0",
     "jquery": "^3.4.1",
     "jsdoc3-parser": "^2.0.0",
